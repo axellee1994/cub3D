@@ -44,7 +44,8 @@ SRC_FILES := main.c \
 			hooks.c \
 			initialization.c \
 			player.c \
-			validation.c 
+			validation.c \
+			input_file.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

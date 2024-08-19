@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/06 13:37:13 by axlee            ###   ########.fr       */
+/*   Updated: 2024/08/19 20:22:55 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "../libft/includes/libft.h"
+# include "../libft/includes/get_next_line.h"
 # include <../mlx/mlx.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
@@ -21,6 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
 
 // Game Environments
 # define SCREEN_WIDTH 1920    // screen width
@@ -153,6 +155,17 @@ typedef struct s_mlx // the mlx structure
 	int current_wall_color;
 }			t_mlx;
 
+typedef struct s_scene
+{
+	char	*north;
+	char	*south;
+	char	*west;
+	char	*east;
+	char	*floor;
+	char	*ceiling;
+	char	**map;
+}			t_scene;
+
 // minimap_fov_lines
 void		draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
 
@@ -220,6 +233,10 @@ int			validate_map(t_data *data);
 int			check_player_position(t_data *data, int y, int x,
 				int *player_count);
 int			validate_player_position(t_data *data);
+
+// Input_file
+void		free_details(t_scene *det);
+t_scene		*check_cub_file(char *file);
 
 // help
 void		display_help(t_mlx *mlx);

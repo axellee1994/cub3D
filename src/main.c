@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:12:01 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/06 13:45:43 by axlee            ###   ########.fr       */
+/*   Updated: 2024/08/19 17:52:20 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_data	*init_argument(char *map_file)
 		ft_putstr_fd("Error: Memory allocation failed\n", 2);
 		return (NULL);
 	}
+	check_cub_file(map_file);
 	// TODO: Implement map loading from file
 	ft_putstr_fd("Loading map from file: ", 1);
 	ft_putstr_fd(map_file, 1);
@@ -48,7 +49,7 @@ t_data	*init_argument(char *map_file)
 
 int	check_and_initialize(int argc, char **argv, t_data **data)
 {
-	if (argc != 1)
+	if (argc != 2)
 	{
 		ft_putstr_fd("Error: Usage: ./cub3D <map_file.cub>\n", 2);
 		return (0);
