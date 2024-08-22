@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:12:01 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/19 17:52:20 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/22 21:55:05 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 t_data	*init_argument(char *map_file)
 {
 	t_data	*dt;
+	t_scene	*scene;
 
 	dt = calloc(1, sizeof(t_data));
 	if (!dt)
@@ -23,7 +24,8 @@ t_data	*init_argument(char *map_file)
 		ft_putstr_fd("Error: Memory allocation failed\n", 2);
 		return (NULL);
 	}
-	check_cub_file(map_file);
+	scene = read_cub_file(map_file);
+	free_details(scene);
 	// TODO: Implement map loading from file
 	ft_putstr_fd("Loading map from file: ", 1);
 	ft_putstr_fd(map_file, 1);

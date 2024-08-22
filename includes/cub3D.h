@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/19 20:22:55 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/22 21:54:49 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,8 @@ typedef struct s_scene
 	char	*south;
 	char	*west;
 	char	*east;
-	char	*floor;
-	char	*ceiling;
+	char	**floor;
+	char	**ceiling;
 	char	**map;
 }			t_scene;
 
@@ -236,7 +236,7 @@ int			validate_player_position(t_data *data);
 
 // Input_file
 void		free_details(t_scene *det);
-t_scene		*check_cub_file(char *file);
+t_scene		*read_cub_file(char *file);
 
 // help
 void		display_help(t_mlx *mlx);

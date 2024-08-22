@@ -6,13 +6,13 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:17:43 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/19 21:46:21 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/22 22:26:25 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-char	*ft_strremove(char *str, char c)
+char	*ft_strremove(char *str, char *set)
 {
 	char	*new;
 	int		i;
@@ -22,22 +22,23 @@ char	*ft_strremove(char *str, char c)
 	len = ft_strlen(str);
 	while (str[i])
 	{
-		if (str[i] == c)
+		if (ft_strchr(set, str[i]))
 			len--;
 		i++;
 	}
-	new = malloc(len * sizeof(char));
+	new = malloc((len + 1) * sizeof(char));
 	len = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] != c)
+		if (!ft_strchr(set, str[i]))
 			new[len] = str[i];
-		if (str[i] != c)
+		if (!ft_strchr(set, str[i]))
 			len++;
 		i++;
 	}
-	free (str);
+	new[len] = '\0';
+	free(str);
 	return (new);
 }
 
@@ -67,50 +68,132 @@ int	is_tex_info(char *line)
 
 void	free_details(t_scene *det)
 {
+	if (!det)
+		return ;
 	if (det->north)
-		free (det->north);
+		free(det->north);
 	if (det->south)
-		free (det->south);
+		free(det->south);
 	if (det->west)
-		free (det->west);
+		free(det->west);
 	if (det->east)
-		free (det->east);
+		free(det->east);
 	if (det->floor)
-		free (det->floor);
+		ft_split_free(&(det->floor));
 	if (det->ceiling)
-		free (det->ceiling);
+		ft_split_free(&(det->ceiling));
 	if (det->map)
 		ft_split_free(&(det->map));
+	free (det);
 }
 
-void	get_tex_info(char *line, t_scene *det)//account for duplicate texture
+void	print_details(t_scene *details)
+{
+	int	i;
+
+	if (!details)
+		return ;
+	if (details->north)
+		printf("NORTH: %s\n", details->north);
+	if (details->south)
+		printf("SOUTH: %s\n", details->south);
+	if (details->east)
+		printf("EAST: %s\n", details->east);
+	if (details->west)
+		printf("WEST: %s\n", details->west);
+	if (details->floor)
+	{
+		i = 0;
+		while (details->floor[i])
+		{
+			printf("FLOOR: %s\n", details->floor[i]);
+			i++;
+		}
+	}
+	if (details->ceiling)
+	{
+		i = 0;
+		while (details->ceiling[i])
+		{
+			printf("CEILING: %s\n", details->ceiling[i]);
+			i++;
+		}
+	}
+	if (details->map)
+	{
+		i = 0;
+		while (details->map[i])
+		{
+			printf("Map: %s\n", details->map[i]);
+			i++;
+		}
+	}
+}
+
+int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 {
 	char	**arr;
+	char	*temp;
 	int		i;
 
-	arr = ft_split(line, ' ');
 	i = 0;
-	while (arr[i])
-		i++;
-	if (i > 2)
+	if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
+		|| !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3))
 	{
-		ft_putstr_fd("Invalid texture format\n", 2);
+		arr = ft_split(line, ' ');
+		while (arr[i])
+			i++;
+		if (i > 2)
+		{
+			ft_putstr_fd("Invalid texture format\n", 2);
+			ft_split_free(&arr);
+			return (1);
+		}
+		if (!ft_strcmp(arr[0], "NO") && !(det->north))
+			det->north = ft_strtrim(arr[1], "\n");
+		else if (!ft_strcmp(arr[0], "SO") && !(det->south))
+			det->south = ft_strtrim(arr[1], "\n");
+		else if (!ft_strcmp(arr[0], "WE") && !(det->west))
+			det->west = ft_strtrim(arr[1], "\n");
+		else if (!ft_strcmp(arr[0], "EA") && !(det->east))
+			det->east = ft_strtrim(arr[1], "\n");
+		else
+		{
+			ft_putstr_fd("Error: duplicate texture information\n", 2);
+			ft_split_free(&arr);
+			return (1);
+		}
 		ft_split_free(&arr);
-		return ;
+		return (0);
 	}
-	if (!ft_strcmp(arr[0], "NO") && i == 2)
-		det->north = ft_strdup(arr[1]);
-	if (!ft_strcmp(arr[0], "SO") && i == 2)
-		det->south = ft_strdup(arr[1]);
-	if (!ft_strcmp(arr[0], "WE") && i == 2)
-		det->west = ft_strdup(arr[1]);
-	if (!ft_strcmp(arr[0], "EA") && i == 2)
-		det->east = ft_strdup(arr[1]);
-	if (!ft_strcmp(arr[0], "F"))
-		det->floor = ft_strdup(arr[1]);
-	if (!ft_strcmp(arr[0], "C"))
-		det->ceiling = ft_strdup(arr[1]);
-	ft_split_free(&arr);
+	else
+	{
+		arr = ft_split(&line[1], ',');
+		while (arr[i])
+		{
+			temp = ft_strtrim(arr[i], " \n");
+			free(arr[i]);
+			arr[i] = temp;
+			i++;
+		}
+		if (i > 3)
+		{
+			ft_putstr_fd("Invalid color format\n", 2);
+			ft_split_free(&arr);
+			return (1);
+		}
+		if (!ft_strncmp(line, "F ", 2) && !(det->floor))
+			det->floor = arr;
+		else if (!ft_strncmp(line, "C ", 2) && !(det->ceiling))
+			det->ceiling = arr;
+		else
+		{
+			ft_putstr_fd("Error: duplicate color information\n", 2);
+			ft_split_free(&arr);
+			return (1);
+		}
+		return (0);
+	}
 }
 
 char	*ft_strjoin_free(char *s1, char *s2)
@@ -122,19 +205,17 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	else
 	{
 		new = ft_strjoin(s1, s2);
-		free (s1);
+		free(s1);
 	}
 	return (new);
 }
 
-t_scene	*check_cub_file(char *file)
+t_scene	*read_cub_file(char *file)
 {
 	int		fd;
 	char	*line;
 	t_scene	*details;
-	char	**test;
 	char	*full;
-	int		i;
 
 	if (ft_strncmp(&file[ft_strlen(file) - 4], ".cub", 4) != 0)
 	{
@@ -161,81 +242,31 @@ t_scene	*check_cub_file(char *file)
 	{
 		if (!is_empty_line(line))
 		{
-			if (!is_tex_info(line))	
+			if (!is_tex_info(line))
 				break ;
 			get_tex_info(line, details);
 		}
-		free (line);
+		free(line);
 		line = get_next_line(fd);
-		if (details->north && details->south && details->east && details->west
-			&& details->floor && details->ceiling)
-			break ;
 	}
 	full = NULL;
-	while (line)
+	while (line)//get the whole map into one string
 	{
 		full = ft_strjoin_free(full, line);
-		free (line);
+		free(line);
 		line = get_next_line(fd);
 	}
-	test = ft_split(full, '\n');
+	if (!(details->north) || !(details->south) || !(details->east) || !(details->west)
+		|| !(details->floor) || !(details->ceiling))
+	{
+		free(full);
+		ft_putstr_fd("Invalid/Missing texture information\n", STDERR_FILENO);
+		free_details(details);
+		return (NULL);
+	}
+	details->map = ft_split(full, '\n');//split the map by newlines
 	free(full);
-	i = 0;
-	while (test[i])
-	{
-		printf("Line: %s\n", test[i]);
-		i++;
-	}
-	i = 0;
-	while (test[i])
-	{
-		free(test[i]);
-		i++;
-	}
-	free(test);
+	print_details(details);
 	close(fd);
 	return (details);
 }
-
-	
-/*
-void	read_cub_file(char *file)
-{
-	int		fd;
-	char	*line;
-	char	**test;
-	char	*full;
-	int		i;
-
-	if (ft_strncmp(&file[ft_strlen(file) - 4], ".cub", 4) != 0)
-	{
-		printf("Error\nInvalid map file name: %s\n", file);
-		printf("File name must end in .cub\n");
-		return ;
-	}
-	fd = open(file, O_RDONLY);
-	full = NULL;
-	line = get_next_line(fd);
-	while (line)
-	{
-		full = ft_strjoin_free(full, line);
-		free (line);
-		line = get_next_line(fd);
-	}
-	test = ft_split(full, '\n');
-	free(full);
-	i = 0;
-	while (test[i])
-	{
-		printf("Line: %s\n", test[i]);
-		i++;
-	}
-	i = 0;
-	while (test[i])
-	{
-		free(test[i]);
-		i++;
-	}
-	free(test);
-}*/
-
