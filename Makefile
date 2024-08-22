@@ -13,7 +13,7 @@ MLX			:= $(MLX_PATH)$(MLX_NAME)
 # Compiler and flags
 CFLAGS = -O3 -Wall -Wextra -Werror
 LEAKCHECK = -g #-fsanitize=address
-CC = gcc $(CFLAGS) $(LEAKCHECK)
+CC = cc $(CFLAGS) $(LEAKCHECK)
 LFLAGS = -L./mlx -lmlx -L./libft -lft -lXext -lX11 -lm $(LEAKCHECK)
 IFLAGS   := -I$(LIBFT_DIR) -I$(INCLUDES_DIR)
 
