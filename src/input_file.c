@@ -6,12 +6,12 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:17:43 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/22 22:26:25 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/23 21:00:04 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
+/*
 char	*ft_strremove(char *str, char *set)
 {
 	char	*new;
@@ -40,7 +40,7 @@ char	*ft_strremove(char *str, char *set)
 	new[len] = '\0';
 	free(str);
 	return (new);
-}
+}*/
 
 int	is_empty_line(char *line)
 {
@@ -145,7 +145,7 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 			i++;
 		if (i > 2)
 		{
-			ft_putstr_fd("Invalid texture format\n", 2);
+			ft_putstr_fd("Error\nInvalid texture format\n", STDERR_FILENO);
 			ft_split_free(&arr);
 			return (1);
 		}
@@ -159,7 +159,7 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 			det->east = ft_strtrim(arr[1], "\n");
 		else
 		{
-			ft_putstr_fd("Error: duplicate texture information\n", 2);
+			ft_putstr_fd("Error\nDuplicate texture information\n", STDERR_FILENO);
 			ft_split_free(&arr);
 			return (1);
 		}
@@ -178,7 +178,7 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 		}
 		if (i > 3)
 		{
-			ft_putstr_fd("Invalid color format\n", 2);
+			ft_putstr_fd("Error\nInvalid color format\n", STDERR_FILENO);
 			ft_split_free(&arr);
 			return (1);
 		}
@@ -188,7 +188,7 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 			det->ceiling = arr;
 		else
 		{
-			ft_putstr_fd("Error: duplicate color information\n", 2);
+			ft_putstr_fd("Error\nDuplicate color information\n", STDERR_FILENO);
 			ft_split_free(&arr);
 			return (1);
 		}
@@ -227,13 +227,13 @@ t_scene	*read_cub_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Failed to open .cub file\n", STDERR_FILENO);
+		ft_putstr_fd("Error\nFailed to open .cub file\n", STDERR_FILENO);
 		return (NULL);	
 	}
 	details = ft_calloc(1, sizeof(t_scene));
 	if (!details)
 	{
-		ft_putstr_fd("Memory allocation failed: Scene details\n", STDERR_FILENO);
+		ft_putstr_fd("Error\nMemory allocation failed: Scene details\n", STDERR_FILENO);
 		close(fd);
 		return (NULL);
 	}
@@ -260,8 +260,15 @@ t_scene	*read_cub_file(char *file)
 		|| !(details->floor) || !(details->ceiling))
 	{
 		free(full);
-		ft_putstr_fd("Invalid/Missing texture information\n", STDERR_FILENO);
+		ft_putstr_fd("Error\nInvalid/Missing texture information\n", STDERR_FILENO);
 		free_details(details);
+		return (NULL);
+	}
+	if (ft_strcmp(full, "\n\n"))
+	{
+		free(full);
+		free_details(details);
+		ft_putstr_fd("Error\nEmpty line detected in map\n", STDERR_FILENO);
 		return (NULL);
 	}
 	details->map = ft_split(full, '\n');//split the map by newlines
