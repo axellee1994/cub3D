@@ -45,7 +45,9 @@ SRC_FILES := main.c \
 			initialization.c \
 			player.c \
 			validation.c \
-			input_file.c
+			input_file.c \
+			check_scene.c \
+			map_elem_checks.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:17:43 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/23 21:00:04 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/27 16:03:33 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,12 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 		arr = ft_split(line, ' ');
 		while (arr[i])
 			i++;
+		if (i == 1)
+		{
+			ft_putstr_fd("Error\nNo texture file provided\n", STDERR_FILENO);
+			ft_split_free(&arr);
+			return (1);
+		}
 		if (i > 2)
 		{
 			ft_putstr_fd("Error\nInvalid texture format\n", STDERR_FILENO);
@@ -176,7 +182,7 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 			arr[i] = temp;
 			i++;
 		}
-		if (i > 3)
+		if (i != 3)
 		{
 			ft_putstr_fd("Error\nInvalid color format\n", STDERR_FILENO);
 			ft_split_free(&arr);
@@ -254,21 +260,33 @@ t_scene	*read_cub_file(char *file)
 	{
 		full = ft_strjoin_free(full, line);
 		free(line);
+		if (!full)
+		{
+			ft_putstr_fd("Error\nIssue encountered while reading map\n", STDERR_FILENO);
+			free_details(details);
+			return (NULL);
+		}
 		line = get_next_line(fd);
 	}
 	if (!(details->north) || !(details->south) || !(details->east) || !(details->west)
-		|| !(details->floor) || !(details->ceiling))
+		|| !(details->floor) || !(details->ceiling))//check for missing info
 	{
 		free(full);
 		ft_putstr_fd("Error\nInvalid/Missing texture information\n", STDERR_FILENO);
 		free_details(details);
 		return (NULL);
 	}
-	if (ft_strcmp(full, "\n\n"))
+	if (ft_strnstr(full, "\n\n", ft_strlen(full)))//check for empty line
 	{
 		free(full);
 		free_details(details);
 		ft_putstr_fd("Error\nEmpty line detected in map\n", STDERR_FILENO);
+		return (NULL);
+	}
+	if (!valid_map_elem(full))
+	{
+		free(full);
+		free_details(details);
 		return (NULL);
 	}
 	details->map = ft_split(full, '\n');//split the map by newlines

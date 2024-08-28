@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_scene.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/26 21:28:37 by jolai             #+#    #+#             */
+/*   Updated: 2024/08/27 17:16:05 by jolai            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "cub3D.h"
 
@@ -12,29 +24,31 @@ int	check_color_val(char **arr)
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (arr[i])
 	{
+		j = 0;
 		while (arr[i][j])
 		{
 			if (!ft_isdigit(arr[i][j]))
 				return (0);
 			j++;
 		}
+		if (ft_atoi(arr[i]) > 255)
+			return (0);
 		i++;
 	}
-	if (ft_atoi(arr[0]) > 255 || ft_atoi(arr[1]) > 255 || ft_atoi(arr[2]) > 255)
-		return (0);
 	return (1);
 }
 
 int	check_tex_file(char *file)
 {
+	int	fd;
+
 	if (ft_strncmp(&file[ft_strlen(file) - 4], ".xpm", 4) != 0)
 	{
 		ft_putstr_fd("Error\nInvalid texture file name:", STDERR_FILENO);
 		ft_putstr_fd(file, STDERR_FILENO);
-		ft_putstr_fd("File name must end in .xpm\n", STDERR_FILENO);
+		ft_putstr_fd("\nFile name must end in .xpm\n", STDERR_FILENO);
 		return (0);
 	}
 	fd = open(file, O_RDONLY);

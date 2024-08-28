@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/22 21:54:49 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/27 17:01:31 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,17 @@ typedef struct s_scene
 	char	**map;
 }			t_scene;
 
+typedef struct s_info
+{
+	t_img			*north;
+	t_img			*south;
+	t_img			*west;
+	t_img			*east;
+	unsigned int	floor;
+	unsigned int	ceiling;
+	char			**map;
+}			t_info;
+
 // minimap_fov_lines
 void		draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
 
@@ -237,6 +248,19 @@ int			validate_player_position(t_data *data);
 // Input_file
 void		free_details(t_scene *det);
 t_scene		*read_cub_file(char *file);
+
+// Check scene
+int			check_color_val(char **arr);
+int			check_tex_file(char *file);
+int			check_scene(t_scene *det);
+
+// Map elem checks
+int			valid_map_elem(char *map);
+int			valid_num_player_pos(char *map);
+void		get_map_dimensions(char **map, t_data *data);
+void		get_player_position(char **map, t_data *data);
+char		**convert_map(char **prev, t_data *data);
+t_data		*process_map(t_scene *scene);
 
 // help
 void		display_help(t_mlx *mlx);

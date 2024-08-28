@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:12:01 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/22 21:55:05 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/27 17:12:47 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,27 @@ t_data	*init_argument(char *map_file)
 	t_data	*dt;
 	t_scene	*scene;
 
-	dt = calloc(1, sizeof(t_data));
+/*	dt = ft_calloc(1, sizeof(t_data));
 	if (!dt)
 	{
 		ft_putstr_fd("Error: Memory allocation failed\n", 2);
 		return (NULL);
-	}
-	scene = read_cub_file(map_file);
-	free_details(scene);
-	// TODO: Implement map loading from file
+	}*/
 	ft_putstr_fd("Loading map from file: ", 1);
 	ft_putstr_fd(map_file, 1);
 	ft_putstr_fd("\n", 1);
-	// Temporary hardcoded map (to be replaced with file loading)
+	// TODO: Implement map loading from file
+	scene = read_cub_file(map_file);
+	if (!check_scene(scene))
+	{
+		free_details(scene);
+		return (NULL);
+	}
+	dt = process_map(scene);
+	free_details(scene);
+	if (!dt)
+		return (NULL);
+/*	// Temporary hardcoded map (to be replaced with file loading)
 	dt->map2d = calloc(10, sizeof(char *));
 	dt->map2d[0] = strdup("1111111111111111111111111");
 	dt->map2d[1] = strdup("1000000000000000000100001");
@@ -45,7 +53,7 @@ t_data	*init_argument(char *map_file)
 	dt->player_y_position = 2;
 	dt->player_x_position = 13;
 	dt->map_width = 25;
-	dt->map_height = 9;
+	dt->map_height = 9;*/
 	return (dt);
 }
 
@@ -83,6 +91,7 @@ int	main(int argc, char **argv)
 
 	if (!check_and_initialize(argc, argv, &data))
 		return (1);
-	start_the_game(data);
+//	start_the_game(data);
+	free_map_data(data);
 	return (0);
 }
