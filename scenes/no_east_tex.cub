@@ -1,6 +1,6 @@
-NO ./n_tex
-SO ./s_tex
-WE ./w_tex
+NO ./textures/n_tex.xpm
+SO ./textures/s_tex.xpm
+WE ./textures/w_tex.xpm
 
 F 220, 100, 0
 C 225, 30, 0
