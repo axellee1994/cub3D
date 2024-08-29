@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:17:43 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/27 16:03:33 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/29 22:10:35 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,7 @@ t_scene	*read_cub_file(char *file)
 		ft_putstr_fd("Error\nEmpty line detected in map\n", STDERR_FILENO);
 		return (NULL);
 	}
-	if (!valid_map_elem(full))
+	if (!valid_map_elem(full) || !valid_num_player_pos(full))
 	{
 		free(full);
 		free_details(details);
@@ -291,7 +291,7 @@ t_scene	*read_cub_file(char *file)
 	}
 	details->map = ft_split(full, '\n');//split the map by newlines
 	free(full);
-	print_details(details);
+//	print_details(details);
 	close(fd);
 	return (details);
 }
