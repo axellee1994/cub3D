@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:04:26 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/28 17:27:12 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/29 22:16:00 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	valid_num_player_pos(char *map)
 		i++;
 	}
 	if (count == 1)
-		return (0);
+		return (1);
 	ft_putstr_fd("Error\nInvalid number of player starting position\n", STDERR_FILENO);
-	return (1);
+	return (0);
 }
 
 void	get_map_dimensions(char **map, t_data *data)
@@ -121,7 +121,7 @@ char	**convert_map(char **prev, t_data *data)
 		}
 		new[i] = line;
 		j = 0;
-		while (j < data->map_width)//why not filling til max len?
+		while (j < data->map_width)
 		{
 			line[j] = '0';
 			if (((unsigned long)j <= ft_strlen(prev[i])) && prev[i][j] && prev[i][j] != ' ')
@@ -150,27 +150,27 @@ void	print_data(t_data *dt)
 	printf("Player start(x,y): %d, %d\n", dt->player_x_position, dt->player_y_position);
 }
 
-void	map_fill(char **map, int x, int y, t_data *data)//use a copy of map?
+void	map_fill(int x, int y, t_data *data, int *valid)
 {
 	char	c;
 
 	if (x < 0 || x >= data->map_width
-		|| y < 0 || y >= data->map_height)
+		|| y < 0 || y >= data->map_height || !(data->map2d[y][x]))
+	{
+		(*valid) = 0;
 		return ;
-	c = map[cur.y][cur.x];
-	if (c == '1' || c == '.')
+	}
+	c = data->map2d[y][x];
+	if (c == '1' || c == '.' || c == 'n' || c == 's' || c == 'w' || c == 'e')
 		return ;
 	else if (c == '0')
-		map[cur.y][cur.x] = '.';
-	cur.x += 1;
-	map_fill(map, cur, data);
-	cur.x -= 2;
-	map_fill(map, cur, data);
-	cur.x += 1;
-	cur.y += 1;
-	map_fill(map, cur, data);
-	cur.y -= 2;
-	map_fill(map, cur, data);
+		data->map2d[y][x] = '.';
+	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		data->map2d[y][x] = data->map2d[y][x] + 32;
+	map_fill(x + 1, y, data, valid);
+	map_fill(x - 1, y, data, valid);
+	map_fill(x, y + 1, data, valid);
+	map_fill(x, y - 1, data, valid);
 }
 
 
@@ -178,9 +178,10 @@ t_data	*process_map(t_scene *scene)
 {
 	t_data	*data;
 	int		i;
-//	int		valid;
+	int		valid;
 
 	i = 0;
+	valid = 1;
 	data = ft_calloc(1, sizeof(t_data));
 	get_map_dimensions(scene->map, data);
 	if (data->map_width <= 0 || data->map_height <= 0)
@@ -191,6 +192,15 @@ t_data	*process_map(t_scene *scene)
 	}
 	data->map2d = convert_map(scene->map, data);
 	get_player_position(data->map2d, data);
+//	print_data(data);
+	map_fill(data->player_x_position, data->player_y_position, data, &valid);
 	print_data(data);
+	if (!valid)
+	{
+		ft_putstr_fd("Error\nInvalid map borders!\n", STDERR_FILENO);
+		free_map_data(data);
+		return (NULL);
+	}
+//	print_data(data);
 	return (data);
 }
