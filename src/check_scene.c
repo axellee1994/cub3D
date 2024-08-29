@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:28:37 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/27 17:16:05 by jolai            ###   ########.fr       */
+/*   Updated: 2024/08/29 22:04:36 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	check_tex_file(char *file)
 
 int	check_scene(t_scene *det)
 {
+	if (!det)
+		return (0);
 	if (!check_color_val(det->floor) || !check_color_val(det->ceiling))
 		return (0);
 	if (!check_tex_file(det->north) || !check_tex_file(det->south) || 
