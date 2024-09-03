@@ -54,7 +54,9 @@ int	check_tex_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Error\nFailed to open .xpm file\n", STDERR_FILENO);
+		ft_putstr_fd("Error\nFailed to open .xpm file:", STDERR_FILENO);
+		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 		return (0);	
 	}
 	close(fd);

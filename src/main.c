@@ -70,7 +70,7 @@ int	check_and_initialize(int argc, char **argv, t_data **data)
 		ft_putstr_fd("Error: Failed to initialize data\n", 2);
 		return (0);
 	}
-	if (!validate_map(*data))
+/*	if (!validate_map(*data))
 	{
 		ft_putstr_fd("Error: Invalid map\n", 2);
 		free_map_data(*data);
@@ -81,7 +81,7 @@ int	check_and_initialize(int argc, char **argv, t_data **data)
 		ft_putstr_fd("Error: Invalid player position\n", 2);
 		free_map_data(*data);
 		return (0);
-	}
+	}*/
 	return (1);
 }
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv)
 
 	if (!check_and_initialize(argc, argv, &data))
 		return (1);
-//	start_the_game(data);
+	start_the_game(data);
 	free_map_data(data);
 	return (0);
 }

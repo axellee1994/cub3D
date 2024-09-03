@@ -5,7 +5,7 @@ unsigned int	convert_rgb(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
-t_img	*new_texture(t_win *win, char *tex_file)
+t_img	*new_texture(t_mlx *mlx, char *tex_file)
 {
 	t_img	*new;
 
@@ -15,7 +15,7 @@ t_img	*new_texture(t_win *win, char *tex_file)
 	new->win = win;
 	new->h = 0;
 	new->w = 0;
-	new->img_ = mlx_xpm_file_to_image(win->mlx_ptr, tex_file,
+	new->img_ = mlx_xpm_file_to_image(mlx->mlx, tex_file,
 			&(new->w), &(new->h));
 	if (!new->img)
 	{
@@ -29,46 +29,46 @@ t_img	*new_texture(t_win *win, char *tex_file)
 	return (new);
 }
 
-int	load_wall_texture(t_scene *scene, t_info *info, t_mlx *data)
+int	load_wall_texture(t_mlx *mlx, t_scene *scene)
 {
-	info->north = new_sprite(data->win, scene->north);
-	if (!(info->north))
+	mlx->dt->north = new_texture(mlx, scene->north);
+	if (!(mlx->dt->north))
 		ft_printf("Error\nFailed to load north texture\n");
-	info->south = new_sprite(data->win, scene->south);
-	if (!(info->south))
+	mlx->dt->south = new_texture(mlx, scene->south);
+	if (!(mlx->dt->south))
 		ft_printf("Error\nFailed to load south texture\n");
-	info->east = new_sprite(data->win, scene->east);
-	if (!(info->east))
+	mlx->dt->east = new_texture(mlx, scene->east);
+	if (!(mlx->dt->east))
 		ft_printf("Error\nFailed to load east texture\n");
-	info->west = new_sprite(data->win, scene->west);
-	if (!(info->west))
+	mlx->dt->west = new_texture(mlx, scene->west);
+	if (!(mlx->dt->west))
 		ft_printf("Error\nFailed to load west texture\n");
-	if (!(info->north) || !(info->south) || !(info->east) || !(info->west))
+	if (!(mlx->dt->north) || !(mlx->dt->south) || !(mlx->dt->east) || !(mlx->dt->west))
 		return (0);
 	return (1);
 
 }
 
-t_info	load_texture(t_scene *scene)
+void	init_textures(t_mlx *mlx, t_scene *scene)
 {
-	t_info	*info;
+/*	t_info	*info;
 
 	info = ft_calloc(1, sizeof(t_info));
 	if (!info)
 	{
 		ft_putstr_fd("Error\nMemory allocation failed: info\n", STDERR_FILENO);
 		return (NULL);
-	}
-	info->floor = convert_rgb(ft_atoi(scene->floor[0]),
+	}*/
+	mlx->dt->floor = convert_rgb(ft_atoi(scene->floor[0]),
 					ft_atoi(scene->floor[1]), ft_atoi(scene->floor[2]));
-	info->ceiling = convert_rgb(ft_atoi(scene->ceiling[0]),
+	mlx->dt->ceiling = convert_rgb(ft_atoi(scene->ceiling[0]),
 					ft_atoi(scene->ceiling[1]), ft_atoi(scene->ceiling[2]));
-	if (!(info->floor) || !(info->ceiling))
+	if (!(data->floor) || !(data->ceiling))//can this even be detected?
 	{	
 		ft_putstr_fd("Error\nColor conversion failed: floor/ceiling\n", STDERR_FILENO);
-		return (NULL);
+//		return (NULL);
 	}
-	if (!load_wall_texture(scene, info, data))
-		return (NULL);
-	return (info);
+	load_wall_texture(mlx, scene);
+//		return (NULL);
+//	return (info);
 }

@@ -66,7 +66,8 @@ void	start_the_game(t_data *dt)
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Cub3D");
 	mlx.img.img = mlx_new_image(mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	init_image_buffer(&mlx);	
+	init_image_buffer(&mlx);
+	init_textures(&mlx);
 	init_the_player(&mlx);
 	mlx.show_help = 0;
 	mlx_loop_hook(mlx.mlx, game_loop, &mlx);

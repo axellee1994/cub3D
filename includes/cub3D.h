@@ -118,11 +118,17 @@ typedef struct s_ray // the ray structure
 
 typedef struct s_data // the data structure
 {
-	char **map2d;          // the map
-	int player_x_position; // player x position in the map
-	int player_y_position; // player y position in the map
-	int map_width;         // map width
-	int map_height;        // map height
+	char **map2d;			// the map
+	int player_x_position;	// player x position in the map
+	int player_y_position;	// player y position in the map
+	int map_width;			// map width
+	int map_height;			// map height
+	t_img			*north;	// north wall texture
+	t_img			*south;	// south wall texture
+	t_img			*west;	// west wall texture
+	t_img			*east;	// east wall texture
+	unsigned int	floor;	// floor color
+	unsigned int	ceiling;//ceiling color
 }			t_data;
 
 typedef struct s_img
@@ -166,7 +172,7 @@ typedef struct s_scene
 	char	**map;
 }			t_scene;
 
-typedef struct s_info
+/*typedef struct s_info
 {
 	t_img			*north;
 	t_img			*south;
@@ -175,7 +181,7 @@ typedef struct s_info
 	unsigned int	floor;
 	unsigned int	ceiling;
 	char			**map;
-}			t_info;
+}			t_info;*/
 
 // minimap_fov_lines
 void		draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
@@ -200,6 +206,7 @@ int			wall_hit(float x, float y, t_mlx *mlx);
 void		cast_rays(t_mlx *mlx);
 
 // free_and_exit
+void		free_textures(t_mlx *mlx);
 void		free_map_data(t_data *dt);
 int			free_and_exit(t_mlx *mlx);
 
@@ -261,6 +268,12 @@ void		get_map_dimensions(char **map, t_data *data);
 void		get_player_position(char **map, t_data *data);
 char		**convert_map(char **prev, t_data *data);
 t_data		*process_map(t_scene *scene);
+
+//load_texture
+unsigned int	convert_rgb(int r, int g, int b);
+t_img			*new_texture(t_mlx *mlx, char *tex_file);
+int				load_wall_texture(t_mlx *mlx, t_scene *scene);
+void			init_textures(t_mlx *mlx, t_scene *scene);
 
 // help
 void		display_help(t_mlx *mlx);
