@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/27 17:01:31 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/04 14:56:38 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,17 @@ typedef struct s_ray // the ray structure
 	int flag;        // flag for the wall
 }			t_ray;
 
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		h;
+	int		w;
+}			t_img;
+
 typedef struct s_data // the data structure
 {
 	char **map2d;			// the map
@@ -130,15 +141,6 @@ typedef struct s_data // the data structure
 	unsigned int	floor;	// floor color
 	unsigned int	ceiling;//ceiling color
 }			t_data;
-
-typedef struct s_img
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_img;
 
 typedef struct s_minimap_coords
 {
@@ -242,9 +244,9 @@ int			unit_circle(float angle, char c);
 // initialization
 int			game_loop(t_mlx *mlx);
 t_data	*init_argument(char *map_file);
-int			check_and_initialize(int argc, char **argv, t_data **data);
+int			check_and_initialize(int argc, char **argv, t_data **data, t_scene **scene);
 void		init_the_player(t_mlx *mlx);
-void		start_the_game(t_data *dt);
+void		start_the_game(t_data *dt, t_scene *scene);
 
 // Validations
 int			validate_map(t_data *data);

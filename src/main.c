@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:12:01 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/27 17:12:47 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/04 15:44:42 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_data	*init_argument(char *map_file)
 		return (NULL);
 	}
 	dt = process_map(scene);
-	free_details(scene);
+//	free_details(scene);
 	if (!dt)
 		return (NULL);
 /*	// Temporary hardcoded map (to be replaced with file loading)
@@ -57,20 +57,33 @@ t_data	*init_argument(char *map_file)
 	return (dt);
 }
 
-int	check_and_initialize(int argc, char **argv, t_data **data)
+int	check_and_initialize(int argc, char **argv, t_data **data, t_scene **scene)
 {
 	if (argc != 2)
 	{
 		ft_putstr_fd("Error: Usage: ./cub3D <map_file.cub>\n", 2);
 		return (0);
 	}
-	*data = init_argument(argv[1]);
+	ft_putstr_fd("Loading map from file: ", 1);
+	ft_putstr_fd(argv[1], 1);
+	ft_putstr_fd("\n", 1);
+	*scene = read_cub_file(argv[1]);
+	if (!check_scene(*scene))
+	{
+		free_details(*scene);
+		return (0);
+	}
+	*data = process_map(*scene);
+//	free_details(scene);
+	if (!data)
+		return (0);
+/*	*data = init_argument(argv[1]);
 	if (!*data)
 	{
 		ft_putstr_fd("Error: Failed to initialize data\n", 2);
 		return (0);
 	}
-/*	if (!validate_map(*data))
+	if (!validate_map(*data))
 	{
 		ft_putstr_fd("Error: Invalid map\n", 2);
 		free_map_data(*data);
@@ -88,10 +101,12 @@ int	check_and_initialize(int argc, char **argv, t_data **data)
 int	main(int argc, char **argv)
 {
 	t_data	*data;
+	t_scene	*scene;
 
-	if (!check_and_initialize(argc, argv, &data))
+	if (!check_and_initialize(argc, argv, &data, &scene))
 		return (1);
-	start_the_game(data);
-	free_map_data(data);
+	start_the_game(data, scene);
+//	free_details(scene);
+//	free_map_data(data);
 	return (0);
 }

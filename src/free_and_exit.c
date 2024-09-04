@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:17:21 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/06 13:45:31 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/04 15:43:59 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,25 @@ void	free_textures(t_mlx *mlx)
 	if (!mlx ||!(mlx->dt))
 		return ;
 	if (mlx->dt->north)
-		mlx_destroy_image(mlx->mlx, mlx->dt->north);
+	{
+		mlx_destroy_image(mlx->mlx, mlx->dt->north->img);
+		free(mlx->dt->north);
+	}
 	if (mlx->dt->south)
-		mlx_destroy_image(mlx->mlx, mlx->dt->south);
+	{
+		mlx_destroy_image(mlx->mlx, mlx->dt->south->img);
+		free(mlx->dt->south);
+	}
 	if (mlx->dt->east)
-		mlx_destroy_image(mlx->mlx, mlx->dt->east);
+	{
+		mlx_destroy_image(mlx->mlx, mlx->dt->east->img);
+		free(mlx->dt->east);
+	}
 	if (mlx->dt->west)
-		mlx_destroy_image(mlx->mlx, mlx->dt->west);
+	{
+		mlx_destroy_image(mlx->mlx, mlx->dt->west->img);
+		free(mlx->dt->west);
+	}
 }
 
 // Free the map data
