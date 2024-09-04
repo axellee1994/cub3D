@@ -6,17 +6,12 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:28:37 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/29 22:04:36 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/04 15:01:25 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "cub3D.h"
-
-unsigned int	convert_rgb(int r, int g, int b)
-{
-	return (r << 16 | g << 8 | b);
-}
 
 int	check_color_val(char **arr)
 {

@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:04:26 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/29 22:16:00 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/04 16:28:00 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	valid_map_elem(char *map)
 			&& map[i] != 'E' && map[i] != 'W')
 		{
 				ft_putstr_fd("Error\nInvalid map character: ", STDERR_FILENO);
-				ft_putstr_fd(&map[i], STDERR_FILENO);
+				ft_putchar_fd(map[i], STDERR_FILENO);
 				ft_putstr_fd("\n", STDERR_FILENO);
 				return (0);
 		}
@@ -194,13 +194,13 @@ t_data	*process_map(t_scene *scene)
 	get_player_position(data->map2d, data);
 //	print_data(data);
 	map_fill(data->player_x_position, data->player_y_position, data, &valid);
-	print_data(data);
+//	print_data(data);
 	if (!valid)
 	{
 		ft_putstr_fd("Error\nInvalid map borders!\n", STDERR_FILENO);
 		free_map_data(data);
 		return (NULL);
 	}
-//	print_data(data);
+	print_data(data);
 	return (data);
 }
