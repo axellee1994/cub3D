@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:04:26 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/04 16:28:00 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/05 16:18:24 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	valid_map_elem(char *map)
 			&& map[i] != 'N' && map[i] != 'S'
 			&& map[i] != 'E' && map[i] != 'W')
 		{
-				ft_putstr_fd("Error\nInvalid map character: ", STDERR_FILENO);
-				ft_putchar_fd(map[i], STDERR_FILENO);
-				ft_putstr_fd("\n", STDERR_FILENO);
-				return (0);
+			ft_putstr_fd("Error\nInvalid map character: ", STDERR_FILENO);
+			ft_putchar_fd(map[i], STDERR_FILENO);
+			ft_putstr_fd("\n", STDERR_FILENO);
+			return (0);
 		}
 		i++;
 	}

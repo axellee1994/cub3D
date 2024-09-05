@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/04 14:56:38 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/05 16:11:39 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ int			key_release(int keycode, t_mlx *mlx);
 void		hook(t_mlx *mlx, double move_x, double move_y);
 
 // player
+double		init_player_orientation(t_mlx *mlx);
 void		reset_player(t_mlx *mlx);
 void		rotate_player(t_mlx *mlx, int direction);
 void		move_player(t_mlx *mlx, double move_x, double move_y);
@@ -243,7 +244,7 @@ int			unit_circle(float angle, char c);
 
 // initialization
 int			game_loop(t_mlx *mlx);
-t_data	*init_argument(char *map_file);
+t_data		*init_argument(char *map_file);
 int			check_and_initialize(int argc, char **argv, t_data **data, t_scene **scene);
 void		init_the_player(t_mlx *mlx);
 void		start_the_game(t_data *dt, t_scene *scene);
@@ -279,4 +280,7 @@ void			init_textures(t_mlx *mlx, t_scene *scene);
 
 // help
 void		display_help(t_mlx *mlx);
+
+//test_utils
+void		print_details(t_scene *details);
 #endif

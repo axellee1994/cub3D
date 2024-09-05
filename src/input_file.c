@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:17:43 by jolai             #+#    #+#             */
-/*   Updated: 2024/08/29 22:10:35 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/05 16:15:25 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,49 +85,6 @@ void	free_details(t_scene *det)
 	if (det->map)
 		ft_split_free(&(det->map));
 	free (det);
-}
-
-void	print_details(t_scene *details)
-{
-	int	i;
-
-	if (!details)
-		return ;
-	if (details->north)
-		printf("NORTH: %s\n", details->north);
-	if (details->south)
-		printf("SOUTH: %s\n", details->south);
-	if (details->east)
-		printf("EAST: %s\n", details->east);
-	if (details->west)
-		printf("WEST: %s\n", details->west);
-	if (details->floor)
-	{
-		i = 0;
-		while (details->floor[i])
-		{
-			printf("FLOOR: %s\n", details->floor[i]);
-			i++;
-		}
-	}
-	if (details->ceiling)
-	{
-		i = 0;
-		while (details->ceiling[i])
-		{
-			printf("CEILING: %s\n", details->ceiling[i]);
-			i++;
-		}
-	}
-	if (details->map)
-	{
-		i = 0;
-		while (details->map[i])
-		{
-			printf("Map: %s\n", details->map[i]);
-			i++;
-		}
-	}
 }
 
 int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
@@ -234,7 +191,7 @@ t_scene	*read_cub_file(char *file)
 	if (fd == -1)
 	{
 		ft_putstr_fd("Error\nFailed to open .cub file\n", STDERR_FILENO);
-		return (NULL);	
+		return (NULL);
 	}
 	details = ft_calloc(1, sizeof(t_scene));
 	if (!details)
