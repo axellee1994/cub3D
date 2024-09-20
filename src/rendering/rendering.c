@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:59:29 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/06 13:46:24 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/20 16:44:46 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,20 @@ int	get_wall_color(t_mlx *mlx, int flag)
 	if (flag == 0)
 	{
 		if (angle > HALF_PI && angle < THREE_HALF_PI)
-			return (WALL_COLOR_WEST);
+//			return (WALL_COLOR_WEST);
+			return ((mlx->ray->v_intersect = 1 - mlx->ray->h_intersect), 4);
 		else
-			return (WALL_COLOR_EAST);
+//			return (WALL_COLOR_EAST);
+			return (2);
 	}
 	else
 	{
 		if (angle > 0 && angle < PI)
-			return (WALL_COLOR_SOUTH);
+//			return (WALL_COLOR_SOUTH);
+			return ((mlx->ray->v_intersect = 1 - mlx->ray->v_intersect), 3);
 		else
-			return (WALL_COLOR_NORTH);
+//			return (WALL_COLOR_NORTH);
+			return (1);
 	}
 }
 
@@ -39,10 +43,10 @@ int	calculate_draw_position(int screen_height, double wall_height,
 {
 	double	base_position;
 
-	if (is_end)
+	if (is_end)//wall bottom
 		base_position = (screen_height / 2.0) + (wall_height / 2.0)
 			+ tilt_offset;
-	else
+	else//wall top
 		base_position = (screen_height / 2.0) - (wall_height / 2.0)
 			+ tilt_offset;
 	if (is_end)
