@@ -13,7 +13,7 @@ MLX			:= $(MLX_PATH)$(MLX_NAME)
 # Compiler and flags
 CFLAGS = -O3 -Wall -Wextra -Werror
 LEAKCHECK = -g #-fsanitize=address
-CC = gcc $(CFLAGS) $(LEAKCHECK)
+CC = cc $(CFLAGS) $(LEAKCHECK)
 LFLAGS = -L./mlx -lmlx -L./libft -lft -lXext -lX11 -lm $(LEAKCHECK)
 IFLAGS   := -I$(LIBFT_DIR) -I$(INCLUDES_DIR)
 
@@ -44,7 +44,12 @@ SRC_FILES := main.c \
 			hooks.c \
 			initialization.c \
 			player.c \
-			validation.c 
+			validation.c \
+			input_file.c \
+			check_scene.c \
+			map_elem_checks.c \
+			load_texture.c \
+			test_utils.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

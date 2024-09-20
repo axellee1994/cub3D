@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/06 13:37:13 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/20 16:14:30 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "../libft/includes/libft.h"
+# include "../libft/includes/get_next_line.h"
 # include <../mlx/mlx.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
@@ -21,6 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
 
 // Game Environments
 # define SCREEN_WIDTH 1920    // screen width
@@ -109,19 +111,12 @@ typedef struct s_player // the player structure
 
 typedef struct s_ray // the ray structure
 {
-	double ray_ngl;  // ray angle
-	double distance; // distance to the wall
-	int flag;        // flag for the wall
+	double	ray_ngl;  // ray angle
+	double	distance; // distance to the wall
+	double	h_intersect;
+	double	v_intersect;
+	int		flag;        // flag for the wall
 }			t_ray;
-
-typedef struct s_data // the data structure
-{
-	char **map2d;          // the map
-	int player_x_position; // player x position in the map
-	int player_y_position; // player y position in the map
-	int map_width;         // map width
-	int map_height;        // map height
-}			t_data;
 
 typedef struct s_img
 {
@@ -130,7 +125,24 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		h;
+	int		w;
 }			t_img;
+
+typedef struct s_data // the data structure
+{
+	char **map2d;			// the map
+	int player_x_position;	// player x position in the map
+	int player_y_position;	// player y position in the map
+	int map_width;			// map width
+	int map_height;			// map height
+	t_img			*north;	// north wall texture
+	t_img			*south;	// south wall texture
+	t_img			*west;	// west wall texture
+	t_img			*east;	// east wall texture
+	unsigned int	floor;	// floor color
+	unsigned int	ceiling;//ceiling color
+}			t_data;
 
 typedef struct s_minimap_coords
 {
@@ -152,6 +164,28 @@ typedef struct s_mlx // the mlx structure
 	int show_help;
 	int current_wall_color;
 }			t_mlx;
+
+typedef struct s_scene
+{
+	char	*north;
+	char	*south;
+	char	*west;
+	char	*east;
+	char	**floor;
+	char	**ceiling;
+	char	**map;
+}			t_scene;
+
+/*typedef struct s_info
+{
+	t_img			*north;
+	t_img			*south;
+	t_img			*west;
+	t_img			*east;
+	unsigned int	floor;
+	unsigned int	ceiling;
+	char			**map;
+}			t_info;*/
 
 // minimap_fov_lines
 void		draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color);
@@ -176,6 +210,7 @@ int			wall_hit(float x, float y, t_mlx *mlx);
 void		cast_rays(t_mlx *mlx);
 
 // free_and_exit
+void		free_textures(t_mlx *mlx);
 void		free_map_data(t_data *dt);
 int			free_and_exit(t_mlx *mlx);
 
@@ -185,6 +220,7 @@ int			key_release(int keycode, t_mlx *mlx);
 void		hook(t_mlx *mlx, double move_x, double move_y);
 
 // player
+double		init_player_orientation(t_mlx *mlx);
 void		reset_player(t_mlx *mlx);
 void		rotate_player(t_mlx *mlx, int direction);
 void		move_player(t_mlx *mlx, double move_x, double move_y);
@@ -210,10 +246,10 @@ int			unit_circle(float angle, char c);
 
 // initialization
 int			game_loop(t_mlx *mlx);
-t_data	*init_argument(char *map_file);
-int			check_and_initialize(int argc, char **argv, t_data **data);
+t_data		*init_argument(char *map_file);
+int			check_and_initialize(int argc, char **argv, t_data **data, t_scene **scene);
 void		init_the_player(t_mlx *mlx);
-void		start_the_game(t_data *dt);
+void		start_the_game(t_data *dt, t_scene *scene);
 
 // Validations
 int			validate_map(t_data *data);
@@ -221,6 +257,32 @@ int			check_player_position(t_data *data, int y, int x,
 				int *player_count);
 int			validate_player_position(t_data *data);
 
+// Input_file
+void		free_details(t_scene *det);
+t_scene		*read_cub_file(char *file);
+
+// Check scene
+int			check_color_val(char **arr);
+int			check_tex_file(char *file);
+int			check_scene(t_scene *det);
+
+// Map elem checks
+int			valid_map_elem(char *map);
+int			valid_num_player_pos(char *map);
+void		get_map_dimensions(char **map, t_data *data);
+void		get_player_position(char **map, t_data *data);
+char		**convert_map(char **prev, t_data *data);
+t_data		*process_map(t_scene *scene);
+
+//load_texture
+unsigned int	convert_rgb(int r, int g, int b);
+t_img			*new_texture(t_mlx *mlx, char *tex_file);
+int				load_wall_texture(t_mlx *mlx, t_scene *scene);
+void			init_textures(t_mlx *mlx, t_scene *scene);
+
 // help
 void		display_help(t_mlx *mlx);
+
+//test_utils
+void		print_details(t_scene *details);
 #endif

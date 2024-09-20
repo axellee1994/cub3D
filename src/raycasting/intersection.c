@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:15 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/06 13:46:31 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/20 17:47:52 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ float	get_h_inter(t_mlx *mlx, float angl)
 		h_x += x_step;
 		h_y += y_step;
 	}
+	mlx->ray->h_intersect = h_x - floor(h_x);
+//	printf("h_x: %f, h_y: %f\n", h_x, h_y);
 	return (sqrt(pow(h_x - mlx->ply->player_x, 2) + pow(h_y
-				- mlx->ply->player_y, 2))); // get the distance
+				- mlx->ply->player_y, 2))); // get the distance(hypotenuse)
 }
 
 // get the vertical intersection
@@ -61,6 +63,8 @@ float	get_v_inter(t_mlx *mlx, float angl)
 		v_x += x_step;
 		v_y += y_step;
 	}
+	mlx->ray->v_intersect = v_y - floor(v_y);
+//	printf("v_x: %f, v_y: %f\n", v_x, v_y);
 	return (sqrt(pow(v_x - mlx->ply->player_x, 2) + pow(v_y
 				- mlx->ply->player_y, 2))); // get the distance
 }
