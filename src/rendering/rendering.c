@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:59:29 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/20 16:44:46 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/22 22:19:51 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ int	calculate_draw_position(int screen_height, double wall_height,
 		base_position = (screen_height / 2.0) - (wall_height / 2.0)
 			+ tilt_offset;
 	if (is_end)
-		return (fmin(screen_height - 1, base_position));
+//		return (fmin(screen_height - 1, base_position));
+		return (base_position);
 	else
-		return (fmax(0, base_position));
+//		return (fmax(0, base_position));
+		return (base_position);
 }
 
 void	render_wall(t_mlx *mlx, int ray, double distance)
@@ -63,6 +65,7 @@ void	render_wall(t_mlx *mlx, int ray, double distance)
 	int		draw_end;
 
 	wall_height = (TILE_SIZE / distance) * mlx->ply->proj_plane;
+	wall_height = fmin(2147483647, wall_height);//prevent infinity when distance is 0
 	tilt_offset = (int)(mlx->ply->tilt_angle * SCREEN_HEIGHT);
 	draw_start = calculate_draw_position(SCREEN_HEIGHT, wall_height,
 			tilt_offset, 0);
@@ -70,5 +73,5 @@ void	render_wall(t_mlx *mlx, int ray, double distance)
 			1);
 	mlx->current_wall_color = get_wall_color(mlx, mlx->ray->flag);
 	draw_floor_ceiling(mlx, ray, draw_start, draw_end + 1);
-	draw_wall(mlx, ray, draw_start, draw_end);
+	draw_wall(mlx, ray, draw_start, draw_end, wall_height);
 }

@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/20 16:14:30 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/22 18:24:51 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,11 +229,11 @@ void		move_player(t_mlx *mlx, double move_x, double move_y);
 void		init_image_buffer(t_mlx *mlx);
 void		draw_pixel(t_mlx *mlx, int x, int y, int color);
 float		nor_angle(float angle);
-void		draw_wall(t_mlx *mlx, int ray, int start, int end);
+//void		draw_wall(t_mlx *mlx, int ray, int start, int end);
 void		draw_floor_ceiling(t_mlx *mlx, int ray, int ceiling_height,
 				int floor_start);
 int			get_wall_color(t_mlx *mlx, int flag);
-void		draw_wall(t_mlx *mlx, int ray, int top_pixel, int bottom_pixel);
+void		draw_wall(t_mlx *mlx, int ray, int top_pixel, int bottom_pixel, double size);
 void		render_wall(t_mlx *mlx, int ray, double adjusted_distance);
 
 // raycasting
