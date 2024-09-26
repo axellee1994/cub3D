@@ -177,10 +177,8 @@ void	map_fill(int x, int y, t_data *data, int *valid)
 t_data	*process_map(t_scene *scene)
 {
 	t_data	*data;
-	int		i;
 	int		valid;
 
-	i = 0;
 	valid = 1;
 	data = ft_calloc(1, sizeof(t_data));
 	get_map_dimensions(scene->map, data);

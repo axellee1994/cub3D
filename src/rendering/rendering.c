@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:59:29 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/22 22:19:51 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/26 16:18:47 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	render_wall(t_mlx *mlx, int ray, double distance)
 			1);
 	mlx->current_wall_color = get_wall_color(mlx, mlx->ray->flag);
 	draw_floor_ceiling(mlx, ray, draw_start, draw_end + 1);
-	draw_wall(mlx, ray, draw_start, draw_end, wall_height);
+	draw_wall(mlx, ray, draw_start, draw_end);
 }

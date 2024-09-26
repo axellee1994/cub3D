@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/22 22:22:27 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/26 16:28:06 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,20 @@ float	nor_angle(float angle)
 	return (angle);
 }
 
-int	get_texture_color(double temp_x, double temp_y, t_img *texture)//do i need to scale?
+int get_texture_color(double temp_x, double temp_y, t_img *texture)
 {
-	unsigned int	*pixel;
-	unsigned int	val;
-	unsigned int	color;
-	int				x;
-	int				y;
+    unsigned int *pixel;
+    unsigned int color;
+    int x, y;
 
-//	printf("x: %f, y %f\n", temp_x, temp_y);
-	x = (int) (texture->w * temp_x);
-//	x = temp_x;
-	y = (int) (texture->h * temp_y);
-//	printf("converted x: %d, y %d\n", x, y);
-	val = WALL_COLOR_NORTH;
-//	if (temp_x < 0.1)
-	pixel = (unsigned int *)(texture->addr
-				+ (y * texture->line_length + x * (texture->bits_per_pixel / 8)));
-//	else
-//		pixel = &val;
-	if (texture->endian != 0)
-		color = (*pixel >> (texture->bits_per_pixel - 8)) & 0xFF;
-	else
-		color = (*pixel);
-	return (color);
+    x = (int)(texture->w * temp_x) % texture->w;
+    y = (int)(texture->h * temp_y) % texture->h;
+
+    pixel = (unsigned int *)(texture->addr
+            + (y * texture->line_length + x * (texture->bits_per_pixel / 8)));
+
+    color = *pixel;
+    return (color);
 }
 /*
 map : render
@@ -66,38 +56,38 @@ factors:
 
 something wrong with the scaling?????*/
 
-void	draw_wall(t_mlx *mlx, int ray, int start, int end, double size)//change to add textures
+void draw_wall(t_mlx *mlx, int ray, int start, int end)
 {
-	int		y;
-	double	scale;
+    int y;
+    double scale;
+    double tex_x;
+    double tex_y;
+    double step;
 
-	scale = (end - start);//should it be tile_size instead?
-	y = fmax(0, start);//this is top
-//	if (mlx->ply->player_y == 30)//troubleshooting infinite loop
-//		printf("Info: start:%d, end: %d, size: %f\n", start, end, size);
-//	y = start;
-//	while (y < end)// original
-	while (y <= fmin(SCREEN_HEIGHT - 1, end))
-	{
-//		if (y == start)
-//			draw_pixel(mlx, ray, y, GREEN);
-//		else
-//		draw_pixel(mlx, ray, y, (mlx->current_wall_color));
-		if (mlx->current_wall_color == 1)
-			draw_pixel(mlx, ray, y, get_texture_color(mlx->ray->h_intersect
-				, (y - start) / scale, mlx->dt->north));
-		else if (mlx->current_wall_color == 2)
-			draw_pixel(mlx, ray, y, get_texture_color(mlx->ray->v_intersect
-				, (y - start) / (scale), mlx->dt->east));
-		else if (mlx->current_wall_color == 3)
-			draw_pixel(mlx, ray, y, get_texture_color(mlx->ray->h_intersect
-				, (y - start) / (scale), mlx->dt->south));
-		else if (mlx->current_wall_color == 4)
-			draw_pixel(mlx, ray, y, get_texture_color(mlx->ray->v_intersect
-				, (y - start) / (scale), mlx->dt->west));
-		y++;
-	}
-	(void) size;
+    scale = end - start;
+    step = 1.0 / scale;
+    y = fmax(0, start);
+    
+    // Calculate the horizontal texture coordinate
+    if (mlx->current_wall_color == 1 || mlx->current_wall_color == 3)
+        tex_x = fmod(mlx->ray->h_intersect, 1.0);
+    else
+        tex_x = fmod(mlx->ray->v_intersect, 1.0);
+
+    tex_y = 0.0;
+    while (y <= fmin(SCREEN_HEIGHT - 1, end))
+    {
+        if (mlx->current_wall_color == 1)
+            draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->north));
+        else if (mlx->current_wall_color == 2)
+            draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->east));
+        else if (mlx->current_wall_color == 3)
+            draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->south));
+        else if (mlx->current_wall_color == 4)
+            draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->west));
+        y++;
+        tex_y += step;
+    }
 }
 
 void	draw_floor_ceiling(t_mlx *mlx, int ray, int ceiling_height,
