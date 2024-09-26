@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:15 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/26 16:29:07 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/26 16:43:11 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ float	get_v_inter(t_mlx *mlx, float angl)
 		v_x += x_step;
 		v_y += y_step;
 	}
-	mlx->ray->v_intersect = fmod(v_y, TILE_SIZE) / TILE_SIZE;
+	mlx->ray->v_intersect = fmod(v_x, TILE_SIZE) / TILE_SIZE;
 //	printf("v_x: %f, v_y: %f\n", v_x, v_y);
 	return (sqrt(pow(v_x - mlx->ply->player_x, 2) + pow(v_y
 				- mlx->ply->player_y, 2))); // get the distance

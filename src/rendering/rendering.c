@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:59:29 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/26 16:18:47 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/26 16:42:36 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	get_wall_color(t_mlx *mlx, int flag)
 	{
 		if (angle > HALF_PI && angle < THREE_HALF_PI)
 //			return (WALL_COLOR_WEST);
-			return ((mlx->ray->v_intersect = 1 - mlx->ray->h_intersect), 4);
+			return ((mlx->ray->v_intersect = 1 - mlx->ray->v_intersect), 4);
 		else
 //			return (WALL_COLOR_EAST);
-			return (2);
+			return ((mlx->ray->v_intersect = 1 - mlx->ray->v_intersect), 2);
 	}
 	else
 	{
