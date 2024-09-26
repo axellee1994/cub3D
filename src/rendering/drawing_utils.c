@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/26 17:17:40 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/26 18:13:27 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,6 @@ int get_texture_color(double temp_x, double temp_y, t_img *texture)
     color = *pixel;
     return (color);
 }
-/*
-map : render
-x/block	:	y/(end - start)
-y = (end - start) * (x / block)
-
-render	:	texture
-r/(end-start)	:	t / texture_size
-
-t = texture_size * (r / (end - start))
-t = texture_size * ((end - start) * (x / block) / (end - start))
-t = texture_size * (x / block)
-
-factors:
-	intersect val
-	texture width
-	render size
-
-something wrong with the scaling?????*/
 
 void draw_wall(t_mlx *mlx, int ray, int start, int end)
 {
@@ -72,10 +54,8 @@ void draw_wall(t_mlx *mlx, int ray, int start, int end)
     else // Horizontal intersection
         wall_x = mlx->ply->player_x + mlx->ray->distance * cos(mlx->ray->ray_ngl);
     wall_x = fmod(wall_x, TILE_SIZE);
-
     // Calculate the horizontal texture coordinate
     tex_x = wall_x / TILE_SIZE;
-
     y = fmax(0, start);
     while (y <= fmin(SCREEN_HEIGHT - 1, end))
     {
@@ -87,9 +67,9 @@ void draw_wall(t_mlx *mlx, int ray, int start, int end)
         else if (mlx->current_wall_color == 2)
             draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->east));
         else if (mlx->current_wall_color == 3)
-            draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->south));
+            draw_pixel(mlx, ray, y, get_texture_color(1 - tex_x, tex_y, mlx->dt->south));
         else if (mlx->current_wall_color == 4)
-            draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->west));
+            draw_pixel(mlx, ray, y, get_texture_color(1 - tex_x, tex_y, mlx->dt->west));
         y++;
     }
 }
