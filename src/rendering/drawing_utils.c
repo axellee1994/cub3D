@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/26 16:28:06 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/26 17:17:40 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,29 @@ something wrong with the scaling?????*/
 void draw_wall(t_mlx *mlx, int ray, int start, int end)
 {
     int y;
-    double scale;
+    double wall_height;
     double tex_x;
     double tex_y;
-    double step;
+    double wall_x;
 
-    scale = end - start;
-    step = 1.0 / scale;
-    y = fmax(0, start);
-    
+    wall_height = end - start;
+
+    // Calculate the exact position where the ray hit the wall
+    if (mlx->ray->flag == 0) // Vertical intersection
+        wall_x = mlx->ply->player_y + mlx->ray->distance * sin(mlx->ray->ray_ngl);
+    else // Horizontal intersection
+        wall_x = mlx->ply->player_x + mlx->ray->distance * cos(mlx->ray->ray_ngl);
+    wall_x = fmod(wall_x, TILE_SIZE);
+
     // Calculate the horizontal texture coordinate
-    if (mlx->current_wall_color == 1 || mlx->current_wall_color == 3)
-        tex_x = fmod(mlx->ray->h_intersect, 1.0);
-    else
-        tex_x = fmod(mlx->ray->v_intersect, 1.0);
+    tex_x = wall_x / TILE_SIZE;
 
-    tex_y = 0.0;
+    y = fmax(0, start);
     while (y <= fmin(SCREEN_HEIGHT - 1, end))
     {
+        // Calculate the vertical texture coordinate
+        tex_y = (y - start) / wall_height;
+
         if (mlx->current_wall_color == 1)
             draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->north));
         else if (mlx->current_wall_color == 2)
@@ -86,7 +91,6 @@ void draw_wall(t_mlx *mlx, int ray, int start, int end)
         else if (mlx->current_wall_color == 4)
             draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y, mlx->dt->west));
         y++;
-        tex_y += step;
     }
 }
 
