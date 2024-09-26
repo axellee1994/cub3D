@@ -6,36 +6,30 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:59:29 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/26 16:42:36 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/26 19:51:32 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 // Assign color of the wall based on the angle (Can be used for texturing)
-int	get_wall_color(t_mlx *mlx, int flag)
+int get_wall_color(t_mlx *mlx, int flag)
 {
-	float	angle;
-
-	angle = nor_angle(mlx->ray->ray_ngl);
-	if (flag == 0)
-	{
-		if (angle > HALF_PI && angle < THREE_HALF_PI)
-//			return (WALL_COLOR_WEST);
-			return ((mlx->ray->v_intersect = 1 - mlx->ray->v_intersect), 4);
-		else
-//			return (WALL_COLOR_EAST);
-			return ((mlx->ray->v_intersect = 1 - mlx->ray->v_intersect), 2);
-	}
-	else
-	{
-		if (angle > 0 && angle < PI)
-//			return (WALL_COLOR_SOUTH);
-			return ((mlx->ray->v_intersect = 1 - mlx->ray->v_intersect), 3);
-		else
-//			return (WALL_COLOR_NORTH);
-			return (1);
-	}
+    float angle = nor_angle(mlx->ray->ray_ngl);
+    if (flag == 0) // Vertical intersection
+    {
+        if (angle > HALF_PI && angle < THREE_HALF_PI)
+            return 4; // West
+        else
+            return 2; // East
+    }
+    else // Horizontal intersection
+    {
+        if (angle > 0 && angle < PI)
+            return 3; // South
+        else
+            return 1; // North
+    }
 }
 
 int	calculate_draw_position(int screen_height, double wall_height,
