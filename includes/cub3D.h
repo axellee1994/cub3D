@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/26 19:46:27 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 05:57:59 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ float		get_h_inter(t_mlx *mlx, float angl);
 float		get_v_inter(t_mlx *mlx, float angl);
 int			wall_hit(float x, float y, t_mlx *mlx);
 void		cast_rays(t_mlx *mlx);
+
 
 // free_and_exit
 void		free_textures(t_mlx *mlx);

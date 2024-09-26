@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:59:29 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/26 19:51:32 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 06:12:22 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ void	render_wall(t_mlx *mlx, int ray, double distance)
 	int		tilt_offset;
 	int		draw_start;
 	int		draw_end;
+
+	// Adjust distance to prevent fisheye effect
+	distance *= cos(mlx->ray->ray_ngl - mlx->ply->angle);
 
 	wall_height = (TILE_SIZE / distance) * mlx->ply->proj_plane;
 	wall_height = fmin(2147483647, wall_height);//prevent infinity when distance is 0
