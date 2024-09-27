@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:12:01 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 09:08:47 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 16:01:27 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ int	check_and_initialize(int argc, char **argv, t_data **data, t_scene **scene)
 		return (0);
 	}
 	*data = process_map(*scene);
-	if (!data)
+	if (!(*data))
+	{
+		free_details(*scene);
 		return (0);
+	}
 	return (1);
 }
 
