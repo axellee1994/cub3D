@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:45:17 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/27 08:58:11 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 09:19:19 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,41 @@ t_img	*new_texture(t_mlx *mlx, char *tex_file)
 
 int	load_wall_texture(t_mlx *mlx, t_scene *scene)
 {
-	if (!load_single_texture(mlx, &mlx->dt->north, scene->north, "North") ||
-		!load_single_texture(mlx, &mlx->dt->south, scene->south, "South") ||
-		!load_single_texture(mlx, &mlx->dt->east, scene->east, "East") ||
-		!load_single_texture(mlx, &mlx->dt->west, scene->west, "West"))
+	if (!load_single_texture(mlx, &mlx->dt->north, scene->north,
+			"North Texture") || !load_single_texture(mlx, &mlx->dt->south,
+			scene->south, "South Texture") || !load_single_texture(mlx,
+			&mlx->dt->east, scene->east, "East Texture")
+		|| !load_single_texture(mlx, &mlx->dt->west, scene->west,
+			"West Texture"))
 	{
 		return (0);
 	}
 	return (1);
 }
 
-int	load_single_texture(t_mlx *mlx, t_img **texture, char *file, char *direction)
+int	load_single_texture(t_mlx *mlx, t_img **texture, char *file,
+		char *direction)
 {
-	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF,
-		ft_strjoin("Loading ", direction));
+	char	*loading_message;
+	int		result;
+
+	loading_message = ft_strjoin("Loading ", direction);
+	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF, loading_message);
+	free(loading_message); // Free the allocated string
 	*texture = new_texture(mlx, file);
 	if (!(*texture))
 	{
 		ft_putstr_fd("Error\nFailed to load ", STDERR_FILENO);
 		ft_putstr_fd(direction, STDERR_FILENO);
 		ft_putstr_fd(" texture\n", STDERR_FILENO);
-		return (0);
+		result = 0;
+	}
+	else
+	{
+		result = 1;
 	}
 	mlx_clear_window(mlx->mlx, mlx->win);
-	return (1);
+	return (result);
 }
 
 void	init_textures(t_mlx *mlx, t_scene *scene)
