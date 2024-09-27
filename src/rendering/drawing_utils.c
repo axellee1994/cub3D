@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 08:38:40 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 09:10:30 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@ int	get_texture_color(double temp_x, double temp_y, t_img *texture)
 	int				x;
 	int				y;
 
-	if (texture->w == 0 || texture->h == 0)
+	if (!texture || texture->w == 0 || texture->h == 0)
 	{
-		ft_putstr_fd("Error: Invalid texture dimensions\n", STDERR_FILENO);
-		return (0);
+		ft_putstr_fd("Error: Invalid texture\n", STDERR_FILENO);
+		return (0xFF0000);  // Return red for error visibility
 	}
 	x = (int)(texture->w * temp_x) % texture->w;
 	y = (int)(texture->h * temp_y) % texture->h;
-	// Bounds checking
 	if (x < 0 || x >= texture->w || y < 0 || y >= texture->h)
-		return (0); // Return a default color (black) if out of bounds
+	{
+		ft_putstr_fd("Warning: Texture coordinates out of bounds\n", STDERR_FILENO);
+		return (0xFF00FF);  // Return magenta for error visibility
+	}
 	pixel = (unsigned int *)(texture->addr + (y * texture->line_length + x
 				* (texture->bits_per_pixel / 8)));
 	return (*pixel);

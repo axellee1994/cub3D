@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 05:57:59 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 09:08:53 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,7 @@ t_data		*process_map(t_scene *scene);
 unsigned int	convert_rgb(int r, int g, int b);
 t_img			*new_texture(t_mlx *mlx, char *tex_file);
 int				load_wall_texture(t_mlx *mlx, t_scene *scene);
+int	load_single_texture(t_mlx *mlx, t_img **texture, char *file, char *direction);
 void			init_textures(t_mlx *mlx, t_scene *scene);
 
 // help

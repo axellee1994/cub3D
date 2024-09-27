@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:28:37 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/04 15:01:25 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/27 09:12:26 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	check_color_val(char **arr)
 				return (0);
 			j++;
 		}
-		if (ft_atoi(arr[i]) > 255)
+		if (ft_atoi(arr[i]) > 255 || ft_atoi(arr[i]) < 0)
 			return (0);
 		i++;
 	}
-	return (1);
+	return (i == 3);  // Ensure exactly 3 color components
 }
 
 int	check_tex_file(char *file)
@@ -41,7 +41,7 @@ int	check_tex_file(char *file)
 
 	if (ft_strncmp(&file[ft_strlen(file) - 4], ".xpm", 4) != 0)
 	{
-		ft_putstr_fd("Error\nInvalid texture file name:", STDERR_FILENO);
+		ft_putstr_fd("Error\nInvalid texture file name: ", STDERR_FILENO);
 		ft_putstr_fd(file, STDERR_FILENO);
 		ft_putstr_fd("\nFile name must end in .xpm\n", STDERR_FILENO);
 		return (0);
@@ -49,7 +49,7 @@ int	check_tex_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Error\nFailed to open .xpm file:", STDERR_FILENO);
+		ft_putstr_fd("Error\nFailed to open .xpm file: ", STDERR_FILENO);
 		ft_putstr_fd(file, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 		return (0);	

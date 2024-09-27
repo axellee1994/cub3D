@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:45:17 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/27 08:35:45 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 08:58:11 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,29 @@ t_img	*new_texture(t_mlx *mlx, char *tex_file)
 
 int	load_wall_texture(t_mlx *mlx, t_scene *scene)
 {
-	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF,
-		"Loading North texture");
-	mlx->dt->north = new_texture(mlx, scene->north);
-	if (!(mlx->dt->north))
-		ft_putstr_fd("Error\nFailed to load north texture\n", STDERR_FILENO);
-	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF,
-		"Loading South texture");
-	mlx->dt->south = new_texture(mlx, scene->south);
-	if (!(mlx->dt->south))
-		ft_putstr_fd("Error\nFailed to load south texture\n", STDERR_FILENO);
-	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF,
-		"Loading East texture");
-	mlx->dt->east = new_texture(mlx, scene->east);
-	if (!(mlx->dt->east))
-		ft_putstr_fd("Error\nFailed to load east texture\n", STDERR_FILENO);
-	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF,
-		"Loading West texture");
-	mlx->dt->west = new_texture(mlx, scene->west);
-	if (!(mlx->dt->west))
-		ft_putstr_fd("Error\nFailed to load west texture\n", STDERR_FILENO);
-	mlx_clear_window(mlx->mlx, mlx->win);
-	if (!(mlx->dt->north) || !(mlx->dt->south) || !(mlx->dt->east)
-		|| !(mlx->dt->west))
+	if (!load_single_texture(mlx, &mlx->dt->north, scene->north, "North") ||
+		!load_single_texture(mlx, &mlx->dt->south, scene->south, "South") ||
+		!load_single_texture(mlx, &mlx->dt->east, scene->east, "East") ||
+		!load_single_texture(mlx, &mlx->dt->west, scene->west, "West"))
+	{
 		return (0);
+	}
+	return (1);
+}
+
+int	load_single_texture(t_mlx *mlx, t_img **texture, char *file, char *direction)
+{
+	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF,
+		ft_strjoin("Loading ", direction));
+	*texture = new_texture(mlx, file);
+	if (!(*texture))
+	{
+		ft_putstr_fd("Error\nFailed to load ", STDERR_FILENO);
+		ft_putstr_fd(direction, STDERR_FILENO);
+		ft_putstr_fd(" texture\n", STDERR_FILENO);
+		return (0);
+	}
+	mlx_clear_window(mlx->mlx, mlx->win);
 	return (1);
 }
 
