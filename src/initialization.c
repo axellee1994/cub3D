@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:21:58 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/04 17:20:50 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/27 08:37:49 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	game_loop(t_mlx *mlx)
 {
 	if (!mlx || !mlx->ply || !mlx->ray || !mlx->dt)
 	{
-		ft_putstr_fd("Error: Uninitialized game data\n", 2);
+		ft_putstr_fd("Error: Uninitialized game data\n", STDERR_FILENO);
 		return (1);
 	}
 	hook(mlx, 0, 0);
@@ -34,7 +34,7 @@ void	init_the_player(t_mlx *mlx)
 {
 	if (!mlx || !mlx->ply || !mlx->dt)
 	{
-		ft_putstr_fd("Error: Uninitialized player data\n", 2);
+		ft_putstr_fd("Error: Uninitialized player data\n", STDERR_FILENO);
 		return ;
 	}
 	mlx->ply->player_x = mlx->dt->player_x_position * TILE_SIZE + TILE_SIZE / 2;
@@ -58,7 +58,7 @@ void	start_the_game(t_data *dt, t_scene *scene)
 	mlx.ply = malloc(sizeof(t_player) + sizeof(t_ray));
 	if (!mlx.ply)
 	{
-		ft_putstr_fd("Error: Memory allocation failed\n", 2);
+		ft_putstr_fd("Error: Memory allocation failed\n", STDERR_FILENO);
 		free_and_exit(&mlx);
 	}
 	mlx.ray = (t_ray *)(mlx.ply + 1);

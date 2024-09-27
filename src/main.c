@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:12:01 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/05 16:13:37 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/27 08:37:51 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_and_initialize(int argc, char **argv, t_data **data, t_scene **scene)
 {
 	if (argc != 2)
 	{
-		ft_putstr_fd("Error: Usage: ./cub3D <map_file.cub>\n", 2);
+		ft_putstr_fd("Error: Usage: ./cub3D <map_file.cub>\n", STDERR_FILENO);
 		return (0);
 	}
 	ft_putstr_fd("Loading map from file: ", 1);

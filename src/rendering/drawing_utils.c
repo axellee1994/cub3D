@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 06:14:11 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 08:38:40 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	get_texture_color(double temp_x, double temp_y, t_img *texture)
 	int				x;
 	int				y;
 
+	if (texture->w == 0 || texture->h == 0)
+	{
+		ft_putstr_fd("Error: Invalid texture dimensions\n", STDERR_FILENO);
+		return (0);
+	}
 	x = (int)(texture->w * temp_x) % texture->w;
 	y = (int)(texture->h * temp_y) % texture->h;
 	// Bounds checking
