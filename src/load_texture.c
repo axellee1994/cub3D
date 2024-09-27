@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_texture.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:45:17 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/04 15:53:09 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/27 08:27:27 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ t_img	*new_texture(t_mlx *mlx, char *tex_file)
 	}
 	new->addr = mlx_get_data_addr(new->img,
 			&(new->bits_per_pixel), &(new->line_length), &(new->endian));
+	if (!new->addr)
+	{
+		free(new);
+		return (NULL);
+	}
 //	new->next = NULL;
 //	new->update_time = 0;
 	return (new);
