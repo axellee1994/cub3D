@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:11:13 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 16:46:29 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 18:12:14 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	draw_minimap(t_mlx *mlx)
 	int	map_x;
 	int	map_y;
 	int	color;
-	int	player_x;
-	int	player_y;
+	float	player_x;
+	float	player_y;
 	int	start_x;
 	int	start_y;
 	int	x;
@@ -85,6 +85,8 @@ void	draw_minimap(t_mlx *mlx)
 		x++;
 	}
 	draw_fov(mlx, start_x, start_y, minimap_width);
+	printf("Player: (%f, %f), Minimap: (%f, %f)\n", 
+		(float)mlx->ply->player_x, (float)mlx->ply->player_y, player_x, player_y);
 }
 
 void	find_endpoint(t_mlx *mlx, double angle, int *end_x, int *end_y,

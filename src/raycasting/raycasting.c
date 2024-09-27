@@ -6,29 +6,29 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:05:24 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 06:18:30 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 18:28:13 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 // check the wall hit
-int	wall_hit(float x, float y, t_mlx *mlx)
+int    wall_hit(double x, double y, t_mlx *mlx)
 {
-	int	x_m;
-	int	y_m;
+    int    x_m;
+    int    y_m;
 
-	if (x < 0 || y < 0)
-		return (0);
-	x_m = floor(x / TILE_SIZE); // get the x position in the map
-	y_m = floor(y / TILE_SIZE); // get the y position in the map
-	if (x_m < 0 || y_m < 0 || y_m >= mlx->dt->map_height
-		|| x_m >= mlx->dt->map_width || !mlx->dt->map2d[y_m])
-		return (0);
-	if (mlx->dt->map2d[y_m] && x_m <= (int)strlen(mlx->dt->map2d[y_m]))
-		if (mlx->dt->map2d[y_m][x_m] == '1')
-			return (0);
-	return (1);
+    if (x < 0 || y < 0)
+        return (0);
+    x_m = (int)floor(x / TILE_SIZE);
+    y_m = (int)floor(y / TILE_SIZE);
+    if (x_m < 0 || y_m < 0 || y_m >= mlx->dt->map_height
+        || x_m >= mlx->dt->map_width || !mlx->dt->map2d[y_m])
+        return (0);
+    if (mlx->dt->map2d[y_m] && x_m <= (int)strlen(mlx->dt->map2d[y_m]))
+        if (mlx->dt->map2d[y_m][x_m] == '1')
+            return (0);
+    return (1);
 }
 
 void cast_rays(t_mlx *mlx)

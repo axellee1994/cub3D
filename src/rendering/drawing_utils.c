@@ -6,20 +6,19 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 09:10:30 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 17:58:07 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 // Normalize the angle to be within 0 and 2*PI
-float	nor_angle(float angle)
+double nor_angle(double angle)
 {
-	while (angle < 0)
-		angle += 2 * PI;
-	while (angle >= 2 * PI)
-		angle -= 2 * PI;
-	return (angle);
+    angle = fmod(angle, 2 * PI);
+    if (angle < 0)
+        angle += 2 * PI;
+    return angle;
 }
 
 int	get_texture_color(double temp_x, double temp_y, t_img *texture)

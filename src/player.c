@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:42:49 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 16:43:25 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 18:27:46 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,28 @@ void	reset_player(t_mlx *mlx)
 void	rotate_player(t_mlx *mlx, int direction)
 {
 	mlx->ply->angle += ROTATION_SPEED * direction;
-	mlx->ply->angle = fmod(mlx->ply->angle + 2 * PI, 2 * PI);
+	mlx->ply->angle = nor_angle(mlx->ply->angle + ROTATION_SPEED * direction);
 }
 
 // Move player
-void	move_player(t_mlx *mlx, double move_x, double move_y)
+void    move_player(t_mlx *mlx, double move_x, double move_y)
 {
-	int		new_x;
-	int		new_y;
-	int		map_grid_x;
-	int		map_grid_y;
-	char	*map;
+    double      new_x;
+    double      new_y;
+    int         map_grid_x;
+    int         map_grid_y;
+    char        *map;
 
-	new_x = roundf(mlx->ply->player_x + move_x);
-	new_y = roundf(mlx->ply->player_y + move_y);
-	map_grid_x = new_x / TILE_SIZE;
-	map_grid_y = new_y / TILE_SIZE;
-	map = mlx->dt->map2d[map_grid_y];
-	if (map[map_grid_x] != '1' && map[mlx->ply->player_x / TILE_SIZE] != '1'
-		&& mlx->dt->map2d[mlx->ply->player_y / TILE_SIZE][map_grid_x] != '1')
-	{
-		mlx->ply->player_x = new_x;
-		mlx->ply->player_y = new_y;
-	}
+    new_x = (mlx->ply->player_x + move_x);
+    new_y = (mlx->ply->player_y + move_y);
+    map_grid_x = (int)floor(new_x / TILE_SIZE);
+    map_grid_y = (int)floor(new_y / TILE_SIZE);
+    map = mlx->dt->map2d[map_grid_y];
+    if (map[map_grid_x] != '1' && map[(int)floor(mlx->ply->player_x / TILE_SIZE)] != '1'
+        && mlx->dt->map2d[(int)floor(mlx->ply->player_y / TILE_SIZE)][map_grid_x] != '1')
+    {
+        mlx->ply->player_x = new_x;
+        mlx->ply->player_y = new_y;
+    }
+    printf("Player moved to: (%.15f, %.15f)\n", mlx->ply->player_x, mlx->ply->player_y);
 }

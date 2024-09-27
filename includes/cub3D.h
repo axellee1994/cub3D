@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 09:08:53 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/27 18:28:43 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@
 // Replace all instances of M_PI with PI in your code
 typedef struct s_player // the player structure
 {
-	int player_x;      // player x position in pixels
-	int player_y;      // player y position in pixels
+	double player_x;      // player x position in pixels
+	double player_y;      // player y position in pixels
 	double angle;      // player angle
 	float fov_rd;      // field of view in radians
 	int rot;           // rotation flag
@@ -206,7 +206,7 @@ int			unit_circle(float angle, char c);
 int			inter_check(float angle, float *inter, float *step, int is_horizon);
 float		get_h_inter(t_mlx *mlx, float angl);
 float		get_v_inter(t_mlx *mlx, float angl);
-int			wall_hit(float x, float y, t_mlx *mlx);
+int			wall_hit(double x, double y, t_mlx *mlx);
 void		cast_rays(t_mlx *mlx);
 
 
@@ -229,7 +229,7 @@ void		move_player(t_mlx *mlx, double move_x, double move_y);
 // rendering
 void		init_image_buffer(t_mlx *mlx);
 void		draw_pixel(t_mlx *mlx, int x, int y, int color);
-float		nor_angle(float angle);
+double		nor_angle(double angle);
 //void		draw_wall(t_mlx *mlx, int ray, int start, int end);
 void		draw_floor_ceiling(t_mlx *mlx, int ray, int ceiling_height,
 				int floor_start);
@@ -241,7 +241,6 @@ void		render_wall(t_mlx *mlx, int ray, double adjusted_distance);
 void		cast_rays(t_mlx *mlx);
 float		get_v_inter(t_mlx *mlx, float angl);
 float		get_h_inter(t_mlx *mlx, float angl);
-int			wall_hit(float x, float y, t_mlx *mlx);
 int			inter_check(float angle, float *inter, float *step, int is_horizon);
 int			unit_circle(float angle, char c);
 
