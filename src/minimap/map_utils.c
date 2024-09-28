@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:59:40 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 23:11:25 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 23:18:57 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,21 @@ void	draw_rectangle(t_mlx *mlx, t_point pos, int size, int color)
 	}
 }
 
-void draw_triangle(t_mlx *mlx, t_point center, int size, int color)
+void	draw_triangle(t_mlx *mlx, t_point center, int size, int color)
 {
-    t_point p1, p2, p3;
-    
-    p1.x = center.x;
-    p1.y = center.y - size / 2;
-    p2.x = center.x - size / 2;
-    p2.y = center.y + size / 2;
-    p3.x = center.x + size / 2;
-    p3.y = center.y + size / 2;
+	double	angle;
 
-    draw_line(mlx, p1, p2, color);
-    draw_line(mlx, p2, p3, color);
-    draw_line(mlx, p3, p1, color);
+	t_point p1, p2, p3;
+	angle = mlx->ply->angle;
+	p1.x = center.x + cos(angle) * size / 2;
+	p1.y = center.y + sin(angle) * size / 2;
+	p2.x = center.x + cos(angle + 2.0944) * size / 2;
+	p2.y = center.y + sin(angle + 2.0944) * size / 2;
+	p3.x = center.x + cos(angle - 2.0944) * size / 2;
+	p3.y = center.y + sin(angle - 2.0944) * size / 2;
+	draw_line(mlx, p1, p2, color);
+	draw_line(mlx, p2, p3, color);
+	draw_line(mlx, p3, p1, color);
 }
 
 void	init_minimap(t_mlx *mlx, t_minimap *minimap)
@@ -57,12 +58,13 @@ void	init_minimap(t_mlx *mlx, t_minimap *minimap)
 	minimap->start_y = 10;
 }
 
-void draw_minimap_player(t_mlx *mlx, t_minimap *minimap)
+void	draw_minimap_player(t_mlx *mlx, t_minimap *minimap)
 {
-    t_point player_pos;
-    int triangle_size = MINIMAP_PLAYER_SIZE * 2;
+	t_point	player_pos;
+	int		triangle_size;
 
-    player_pos.x = minimap->width / 2 + minimap->start_x;
-    player_pos.y = minimap->height / 2 + minimap->start_y;
-    draw_triangle(mlx, player_pos, triangle_size, MINIMAP_PLAYER_COLOR);
+	triangle_size = MINIMAP_PLAYER_SIZE * 2.5;
+	player_pos.x = minimap->width / 2 + minimap->start_x;
+	player_pos.y = minimap->height / 2 + minimap->start_y;
+	draw_triangle(mlx, player_pos, triangle_size, MINIMAP_PLAYER_COLOR);
 }

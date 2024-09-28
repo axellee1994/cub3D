@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 23:11:38 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 23:14:35 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,11 +209,10 @@ typedef struct s_scene
 
 // fov
 void			draw_line(t_mlx *mlx, t_point start, t_point end, int color);
-void			draw_minimap_fov(t_mlx *mlx, t_minimap *minimap);
 
 // minimap
 void			draw_rectangle(t_mlx *mlx, t_point pos, int size, int color);
-void            draw_triangle(t_mlx *mlx, t_point center, int size, int color);
+void 			draw_triangle(t_mlx *mlx, t_point center, int size, int color);
 void			init_minimap(t_mlx *mlx, t_minimap *minimap);
 void			draw_minimap_player(t_mlx *mlx, t_minimap *minimap);
 void			draw_minimap(t_mlx *mlx);
