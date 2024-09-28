@@ -6,19 +6,19 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 17:58:07 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 22:54:40 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 // Normalize the angle to be within 0 and 2*PI
-double nor_angle(double angle)
+double	nor_angle(double angle)
 {
-    angle = fmod(angle, 2 * PI);
-    if (angle < 0)
-        angle += 2 * PI;
-    return angle;
+	angle = fmod(angle, 2 * PI);
+	if (angle < 0)
+		angle += 2 * PI;
+	return (angle);
 }
 
 int	get_texture_color(double temp_x, double temp_y, t_img *texture)
@@ -30,14 +30,15 @@ int	get_texture_color(double temp_x, double temp_y, t_img *texture)
 	if (!texture || texture->w == 0 || texture->h == 0)
 	{
 		ft_putstr_fd("Error: Invalid texture\n", STDERR_FILENO);
-		return (0xFF0000);  // Return red for error visibility
+		return (0xFF0000);
 	}
 	x = (int)(texture->w * temp_x) % texture->w;
 	y = (int)(texture->h * temp_y) % texture->h;
 	if (x < 0 || x >= texture->w || y < 0 || y >= texture->h)
 	{
-		ft_putstr_fd("Warning: Texture coordinates out of bounds\n", STDERR_FILENO);
-		return (0xFF00FF);  // Return magenta for error visibility
+		ft_putstr_fd("Warning: Texture coordinates out of bounds\n",
+			STDERR_FILENO);
+		return (0xFF00FF);
 	}
 	pixel = (unsigned int *)(texture->addr + (y * texture->line_length + x
 				* (texture->bits_per_pixel / 8)));
@@ -94,14 +95,12 @@ void	draw_floor_ceiling(t_mlx *mlx, int ray, int ceiling_height,
 	i = floor_start;
 	while (i < SCREEN_HEIGHT)
 	{
-		//		draw_pixel(mlx, ray, i, FLOOR_COLOR);
 		draw_pixel(mlx, ray, i, mlx->dt->floor);
 		i++;
 	}
 	i = 0;
 	while (i < ceiling_height)
 	{
-		//		draw_pixel(mlx, ray, i, CEILING_COLOR);
 		draw_pixel(mlx, ray, i, mlx->dt->ceiling);
 		i++;
 	}

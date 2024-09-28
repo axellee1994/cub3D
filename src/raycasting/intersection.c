@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:15 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/26 16:43:11 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 22:53:23 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,16 @@ float	get_h_inter(t_mlx *mlx, float angl)
 	pixel = inter_check(angl, &h_y, &y_step, 1);
 	h_x = mlx->ply->player_x + (h_y - mlx->ply->player_y) / tan(angl);
 	if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y')
-			&& x_step < 0)) // check x_step value
+			&& x_step < 0))
 		x_step *= -1;
 	while (wall_hit(h_x, h_y - pixel, mlx))
-	// check the wall hit whit the pixel value
 	{
 		h_x += x_step;
 		h_y += y_step;
 	}
 	mlx->ray->h_intersect = fmod(h_x, TILE_SIZE) / TILE_SIZE;
-//	printf("h_x: %f, h_y: %f\n", h_x, h_y);
 	return (sqrt(pow(h_x - mlx->ply->player_x, 2) + pow(h_y
-				- mlx->ply->player_y, 2))); // get the distance(hypotenuse)
+				- mlx->ply->player_y, 2)));
 }
 
 // get the vertical intersection
@@ -56,7 +54,7 @@ float	get_v_inter(t_mlx *mlx, float angl)
 	pixel = inter_check(angl, &v_x, &x_step, 0);
 	v_y = mlx->ply->player_y + (v_x - mlx->ply->player_x) * tan(angl);
 	if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x')
-			&& y_step > 0)) // check y_step value
+			&& y_step > 0))
 		y_step *= -1;
 	while (wall_hit(v_x - pixel, v_y, mlx))
 	{
@@ -64,7 +62,6 @@ float	get_v_inter(t_mlx *mlx, float angl)
 		v_y += y_step;
 	}
 	mlx->ray->v_intersect = fmod(v_x, TILE_SIZE) / TILE_SIZE;
-//	printf("v_x: %f, v_y: %f\n", v_x, v_y);
 	return (sqrt(pow(v_x - mlx->ply->player_x, 2) + pow(v_y
-				- mlx->ply->player_y, 2))); // get the distance
+				- mlx->ply->player_y, 2)));
 }

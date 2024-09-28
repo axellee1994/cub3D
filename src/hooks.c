@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:26:10 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 18:28:03 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 22:58:07 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,40 +56,41 @@ int	key_release(int keycode, t_mlx *mlx)
 	return (0);
 }
 
-// Hook function
-void hook(t_mlx *mlx, double move_x, double move_y)
+static void	calculate_movement(t_mlx *mlx, double *move_x, double *move_y)
 {
-    // Apply rotation first
-    if (mlx->ply->rot)
-        rotate_player(mlx, mlx->ply->rot);
+	double	forward_x;
+	double	forward_y;
+	double	right_x;
+	double	right_y;
 
-    // Calculate movement based on the updated angle
-    double forward_x = cos(mlx->ply->angle) * PLAYER_SPEED;
-    double forward_y = sin(mlx->ply->angle) * PLAYER_SPEED;
-    double right_x = cos(mlx->ply->angle + PI / 2) * PLAYER_SPEED;
-    double right_y = sin(mlx->ply->angle + PI / 2) * PLAYER_SPEED;
+	forward_x = cos(mlx->ply->angle) * PLAYER_SPEED;
+	forward_y = sin(mlx->ply->angle) * PLAYER_SPEED;
+	right_x = cos(mlx->ply->angle + PI / 2) * PLAYER_SPEED;
+	right_y = sin(mlx->ply->angle + PI / 2) * PLAYER_SPEED;
+	*move_x = 0;
+	*move_y = 0;
+	if (mlx->ply->up_to_down)
+	{
+		*move_x += forward_x * mlx->ply->up_to_down;
+		*move_y += forward_y * mlx->ply->up_to_down;
+	}
+	if (mlx->ply->left_to_right)
+	{
+		*move_x += right_x * mlx->ply->left_to_right;
+		*move_y += right_y * mlx->ply->left_to_right;
+	}
+}
 
-    move_x = 0;
-    move_y = 0;
-
-    if (mlx->ply->up_to_down)
-    {
-        move_x += forward_x * mlx->ply->up_to_down;
-        move_y += forward_y * mlx->ply->up_to_down;
-    }
-    if (mlx->ply->left_to_right)
-    {
-        move_x += right_x * mlx->ply->left_to_right;
-        move_y += right_y * mlx->ply->left_to_right;
-    }
-
-    // Apply tilt if necessary
-    if (mlx->ply->tilt)
-    {
-        mlx->ply->tilt_angle += TILT_SPEED * mlx->ply->tilt;
-        mlx->ply->tilt_angle = fmax(-MAX_TILT, fmin(MAX_TILT, mlx->ply->tilt_angle));
-    }
-
-    // Move the player
-    move_player(mlx, move_x, move_y);
+void	hook(t_mlx *mlx, double move_x, double move_y)
+{
+	if (mlx->ply->rot)
+		rotate_player(mlx, mlx->ply->rot);
+	calculate_movement(mlx, &move_x, &move_y);
+	if (mlx->ply->tilt)
+	{
+		mlx->ply->tilt_angle += TILT_SPEED * mlx->ply->tilt;
+		mlx->ply->tilt_angle = fmax(-MAX_TILT, fmin(MAX_TILT,
+					mlx->ply->tilt_angle));
+	}
+	move_player(mlx, move_x, move_y);
 }
