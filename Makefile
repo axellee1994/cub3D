@@ -31,6 +31,7 @@ INCLUDES       := $(addprefix $(INCLUDES_DIR)/, $(INCLUDES_FILES))
 SRC_FILES := main.c \
 			minimap/minimap.c \
 			minimap/map_utils.c \
+			minimap/draw_line.c \
 			raycasting/angle_utils.c \
 			raycasting/intersection_utils.c \
 			raycasting/intersection.c \
