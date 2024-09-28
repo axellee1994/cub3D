@@ -50,6 +50,7 @@ SRC_FILES := main.c \
 			check_scene.c \
 			map_elem_checks.c \
 			load_texture.c \
+			loading_utils.c \
 			test_utils.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC_FILES))

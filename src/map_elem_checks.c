@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:04:26 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/05 16:18:24 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/28 17:23:31 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,9 +190,7 @@ t_data	*process_map(t_scene *scene)
 	}
 	data->map2d = convert_map(scene->map, data);
 	get_player_position(data->map2d, data);
-//	print_data(data);
 	map_fill(data->player_x_position, data->player_y_position, data, &valid);
-//	print_data(data);
 	if (!valid)
 	{
 		ft_putstr_fd("Error\nInvalid map borders!\n", STDERR_FILENO);

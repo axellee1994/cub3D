@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:12:01 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 16:01:27 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/28 21:07:39 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	check_and_initialize(int argc, char **argv, t_data **data, t_scene **scene)
 	*scene = read_cub_file(argv[1]);
 	if (!check_scene(*scene))
 	{
-		free_details(*scene);
+		free_scene(*scene);
 		return (0);
 	}
 	*data = process_map(*scene);
 	if (!(*data))
 	{
-		free_details(*scene);
+		free_scene(*scene);
 		return (0);
 	}
 	return (1);

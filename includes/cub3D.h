@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 15:29:43 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 21:01:52 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,13 @@ int				load_wall_texture(t_mlx *mlx, t_scene *scene);
 int				load_single_texture(t_mlx *mlx, t_img **texture, char *file,
 					char *direction);
 void			init_textures(t_mlx *mlx, t_scene *scene);
+
+//loading_utils
+char			*ft_strjoin_free(char *s1, char *s2);
+int				is_empty_line(char *line);
+int				is_tex_info(char *line);
+void			free_scene(t_scene *scene);
+void			load_error(char *msg, char *line, char **arr, t_scene *scene);
 
 // help
 void			display_help(t_mlx *mlx);

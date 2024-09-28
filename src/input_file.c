@@ -6,86 +6,11 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:17:43 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/27 09:02:59 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 21:06:43 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-/*
-char	*ft_strremove(char *str, char *set)
-{
-	char	*new;
-	int		i;
-	int		len;
-
-	i = 0;
-	len = ft_strlen(str);
-	while (str[i])
-	{
-		if (ft_strchr(set, str[i]))
-			len--;
-		i++;
-	}
-	new = malloc((len + 1) * sizeof(char));
-	len = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_strchr(set, str[i]))
-			new[len] = str[i];
-		if (!ft_strchr(set, str[i]))
-			len++;
-		i++;
-	}
-	new[len] = '\0';
-	free(str);
-	return (new);
-}*/
-
-int	is_empty_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\f' && line[i] != '\n'
-			&& line[i] != '\r' && line[i] != '\t' && line[i] != '\v')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	is_tex_info(char *line)
-{
-	if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
-		|| !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3)
-		|| !ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
-		return (1);
-	return (0);
-}
-
-void	free_details(t_scene *det)
-{
-	if (!det)
-		return ;
-	if (det->north)
-		free(det->north);
-	if (det->south)
-		free(det->south);
-	if (det->west)
-		free(det->west);
-	if (det->east)
-		free(det->east);
-	if (det->floor)
-		ft_split_free(&(det->floor));
-	if (det->ceiling)
-		ft_split_free(&(det->ceiling));
-	if (det->map)
-		ft_split_free(&(det->map));
-	free (det);
-}
 
 int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 {
@@ -159,20 +84,6 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 	}
 }
 
-char	*ft_strjoin_free(char *s1, char *s2)
-{
-	char	*new;
-
-	if (!s1)
-		new = ft_strdup(s2);
-	else
-	{
-		new = ft_strjoin(s1, s2);
-		free(s1);
-	}
-	return (new);
-}
-
 t_scene	*read_cub_file(char *file)
 {
 	int		fd;
@@ -220,7 +131,7 @@ t_scene	*read_cub_file(char *file)
 		if (!full)
 		{
 			ft_putstr_fd("Error\nIssue encountered while reading map\n", STDERR_FILENO);
-			free_details(details);
+			free_scene(details);
 			return (NULL);
 		}
 		line = get_next_line(fd);
@@ -230,20 +141,20 @@ t_scene	*read_cub_file(char *file)
 	{
 		free(full);
 		ft_putstr_fd("Error\nInvalid/Missing texture information\n", STDERR_FILENO);
-		free_details(details);
+		free_scene(details);
 		return (NULL);
 	}
 	if (ft_strnstr(full, "\n\n", ft_strlen(full)))//check for empty line
 	{
 		free(full);
-		free_details(details);
+		free_scene(details);
 		ft_putstr_fd("Error\nEmpty line detected in map\n", STDERR_FILENO);
 		return (NULL);
 	}
 	if (!valid_map_elem(full) || !valid_num_player_pos(full))
 	{
 		free(full);
-		free_details(details);
+		free_scene(details);
 		return (NULL);
 	}
 	details->map = ft_split(full, '\n');//split the map by newlines

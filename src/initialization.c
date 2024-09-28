@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:21:58 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 14:39:29 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 21:06:26 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	start_the_game(t_data *dt, t_scene *scene)
 	mlx.img.img = mlx_new_image(mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	init_image_buffer(&mlx);
 	init_textures(&mlx, scene);
-	free_details(scene);
+	free_scene(scene);
 	init_the_player(&mlx);
 	mlx.show_help = 0;
 	mlx_loop_hook(mlx.mlx, game_loop, &mlx);
