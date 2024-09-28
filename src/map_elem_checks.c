@@ -6,7 +6,7 @@
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:04:26 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/28 17:23:31 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/28 23:07:59 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	valid_num_player_pos(char *map)
 	}
 	if (count == 1)
 		return (1);
-	ft_putstr_fd("Error\nInvalid number of player starting position\n", STDERR_FILENO);
+//	ft_putstr_fd("Error\nInvalid number of player starting position\n", STDERR_FILENO);
+	load_error("Invalid number of player starting position", NULL, NULL, NULL);	
 	return (0);
 }
 
@@ -106,7 +107,8 @@ char	**convert_map(char **prev, t_data *data)
 	new = ft_calloc(data->map_height + 1, sizeof(char *));
 	if (!new)
 	{
-		ft_putstr_fd("Error\nMemory allocation error\n", STDERR_FILENO);
+//		ft_putstr_fd("Error\nMemory allocation error\n", STDERR_FILENO);
+		load_error("Memory allocation error: Map", NULL, NULL, NULL);
 		return (NULL);
 	}
 	i = 0;
@@ -115,8 +117,9 @@ char	**convert_map(char **prev, t_data *data)
 		line = ft_calloc(data->map_width + 1, sizeof(char));
 		if (!line)
 		{
-			ft_putstr_fd("Error\nMemory allocation failed\n", STDERR_FILENO);
-			ft_split_free(&new);
+//			ft_putstr_fd("Error\nMemory allocation failed\n", STDERR_FILENO);
+//			ft_split_free(&new);
+			load_error("Memory allocation failed: Map line", NULL, NULL, NULL);
 			return (NULL);
 		}
 		new[i] = line;
@@ -184,8 +187,9 @@ t_data	*process_map(t_scene *scene)
 	get_map_dimensions(scene->map, data);
 	if (data->map_width <= 0 || data->map_height <= 0)
 	{
-		ft_putstr_fd("Error\nInvalid map dimensions!\n", STDERR_FILENO);
+//		ft_putstr_fd("Error\nInvalid map dimensions!\n", STDERR_FILENO);
 		free_map_data(data);
+		load_error("Invalid map dimensions", NULL, NULL, NULL);
 		return (NULL);
 	}
 	data->map2d = convert_map(scene->map, data);
@@ -193,8 +197,9 @@ t_data	*process_map(t_scene *scene)
 	map_fill(data->player_x_position, data->player_y_position, data, &valid);
 	if (!valid)
 	{
-		ft_putstr_fd("Error\nInvalid map borders!\n", STDERR_FILENO);
+//		ft_putstr_fd("Error\nInvalid map borders!\n", STDERR_FILENO);
 		free_map_data(data);
+		load_error("Invalid map borders", NULL, NULL, NULL);
 		return (NULL);
 	}
 	print_data(data);
