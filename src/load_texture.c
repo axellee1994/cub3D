@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:45:17 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/28 23:00:04 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 23:06:35 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int	load_wall_texture(t_mlx *mlx, t_scene *scene)
 int	load_single_texture(t_mlx *mlx, t_img **texture, char *file,
 		char *direction)
 {
-	char	*loading_message;
+	char	*msg;
 	int		result;
 
-	loading_message = ft_strjoin("Loading ", direction);
-	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF, loading_message);
-	free(loading_message); // Free the allocated string
+	msg = ft_strjoin("Loading ", direction);
+	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF, msg);
+	free(msg);
 	*texture = new_texture(mlx, file);
 	if (!(*texture))
 	{
@@ -75,34 +75,28 @@ int	load_single_texture(t_mlx *mlx, t_img **texture, char *file,
 		result = 0;
 	}
 	else
-	{
 		result = 1;
-	}
 	mlx_clear_window(mlx->mlx, mlx->win);
 	return (result);
 }
 
 void	init_textures(t_mlx *mlx, t_scene *scene)
 {
-	/*	t_info	*info;
-		info = ft_calloc(1, sizeof(t_info));
-		if (!info)
-		{
-			ft_putstr_fd("Error\nMemory allocation failed: info\n",
-				STDERR_FILENO);
-			return (NULL);
-		}*/
 	mlx->dt->floor = convert_rgb(ft_atoi(scene->floor[0]),
 			ft_atoi(scene->floor[1]), ft_atoi(scene->floor[2]));
 	mlx->dt->ceiling = convert_rgb(ft_atoi(scene->ceiling[0]),
 			ft_atoi(scene->ceiling[1]), ft_atoi(scene->ceiling[2]));
-	if (!(mlx->dt->floor) || !(mlx->dt->ceiling)) // can this even be detected?
+	if (!(mlx->dt->floor) || !(mlx->dt->ceiling))
 	{
 		ft_putstr_fd("Error\nColor conversion failed: floor/ceiling\n",
 			STDERR_FILENO);
-		//		return (NULL);
+		free_scene(scene);
+		free_and_exit(mlx);
 	}
-	load_wall_texture(mlx, scene);
-	//		return (NULL);
-	//	return (info);
+	if (!load_wall_texture(mlx, scene))
+	{
+		free_scene(scene);
+		free_and_exit(mlx);
+	}
+	free_scene(scene);
 }
