@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 17:26:15 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/28 23:00:36 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 23:17:46 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	free_scene(t_scene *scene)
 	if (scene->map)
 		ft_split_free(&(scene->map));
 	free (scene);
+	scene = NULL;
 }
 
 void	load_error(char *msg, char *line, char **arr, t_scene *scene)

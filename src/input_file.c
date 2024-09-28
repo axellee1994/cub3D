@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:17:43 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/28 21:06:43 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/28 21:40:47 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 			i++;
 		if (i == 1)
 		{
-			ft_putstr_fd("Error\nNo texture file provided\n", STDERR_FILENO);
-			ft_split_free(&arr);
+//			ft_putstr_fd("Error\nNo texture file provided\n", STDERR_FILENO);
+//			ft_split_free(&arr);
+			load_error("No texture file provided", NULL, arr, NULL);
 			return (1);
 		}
 		if (i > 2)
 		{
-			ft_putstr_fd("Error\nInvalid texture format\n", STDERR_FILENO);
-			ft_split_free(&arr);
+//			ft_putstr_fd("Error\nInvalid texture format\n", STDERR_FILENO);
+//			ft_split_free(&arr);
+			load_error("Invalid texture file format", NULL, arr, NULL);
 			return (1);
 		}
 		if (!ft_strcmp(arr[0], "NO") && !(det->north))
@@ -47,8 +49,9 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 			det->east = ft_strtrim(arr[1], "\n");
 		else
 		{
-			ft_putstr_fd("Error\nDuplicate texture information\n", STDERR_FILENO);
-			ft_split_free(&arr);
+//			ft_putstr_fd("Error\nDuplicate texture information\n", STDERR_FILENO);
+//			ft_split_free(&arr);
+			load_error("Duplicate texture information", NULL, arr, NULL);
 			return (1);
 		}
 		ft_split_free(&arr);
@@ -66,7 +69,7 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 		}
 		if (i != 3)
 		{
-			ft_putstr_fd("Error\nInvalid color format\n", STDERR_FILENO);
+			ft_putstr_fd("Error\nInvalid color format", STDERR_FILENO);
 			ft_split_free(&arr);
 			return (1);
 		}
@@ -76,7 +79,7 @@ int	get_tex_info(char *line, t_scene *det)//account for duplicate texture
 			det->ceiling = arr;
 		else
 		{
-			ft_putstr_fd("Error\nDuplicate color information\n", STDERR_FILENO);
+			ft_putstr_fd("Error\nDuplicate color information", STDERR_FILENO);
 			ft_split_free(&arr);
 			return (1);
 		}
@@ -93,22 +96,25 @@ t_scene	*read_cub_file(char *file)
 
 	if (ft_strncmp(&file[ft_strlen(file) - 4], ".cub", 4) != 0)
 	{
-		ft_putstr_fd("Error\nInvalid map file name:", STDERR_FILENO);
-		ft_putstr_fd(file, STDERR_FILENO);
-		ft_putstr_fd("File name must end in .cub\n", STDERR_FILENO);
+//		ft_putstr_fd("Error\nInvalid map file name:", STDERR_FILENO);
+//		ft_putstr_fd(file, STDERR_FILENO);
+//		ft_putstr_fd("File name must end in .cub\n", STDERR_FILENO);
+		load_error("Invalid scene file. Filename must end in .cub", NULL, NULL, NULL);
 		return (NULL);
 	}
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Error\nFailed to open .cub file\n", STDERR_FILENO);
+//		ft_putstr_fd("Error\nFailed to open .cub file\n", STDERR_FILENO);
+		load_error("Failed to open .cub file", NULL, NULL, NULL);
 		return (NULL);
 	}
 	details = ft_calloc(1, sizeof(t_scene));
 	if (!details)
 	{
-		ft_putstr_fd("Error\nMemory allocation failed: Scene details\n", STDERR_FILENO);
+//		ft_putstr_fd("Error\nMemory allocation failed: Scene details\n", STDERR_FILENO);
 		close(fd);
+		load_error("Memory allocation failed: Scene details", NULL, NULL, NULL);
 		return (NULL);
 	}
 	line = get_next_line(fd);
@@ -130,8 +136,9 @@ t_scene	*read_cub_file(char *file)
 		free(line);
 		if (!full)
 		{
-			ft_putstr_fd("Error\nIssue encountered while reading map\n", STDERR_FILENO);
-			free_scene(details);
+//			ft_putstr_fd("Error\nIssue encountered while reading map\n", STDERR_FILENO);
+//			free_scene(details);
+			load_error("Issue encountered while reading map", NULL, NULL, details);
 			return (NULL);
 		}
 		line = get_next_line(fd);
@@ -139,22 +146,25 @@ t_scene	*read_cub_file(char *file)
 	if (!(details->north) || !(details->south) || !(details->east) || !(details->west)
 		|| !(details->floor) || !(details->ceiling))//check for missing info
 	{
-		free(full);
-		ft_putstr_fd("Error\nInvalid/Missing texture information\n", STDERR_FILENO);
-		free_scene(details);
+//		free(full);
+//		ft_putstr_fd("Error\nInvalid/Missing texture information\n", STDERR_FILENO);
+//		free_scene(details);
+		load_error("Invalid/Missing texture information", full, NULL, details);
 		return (NULL);
 	}
 	if (ft_strnstr(full, "\n\n", ft_strlen(full)))//check for empty line
 	{
-		free(full);
-		free_scene(details);
-		ft_putstr_fd("Error\nEmpty line detected in map\n", STDERR_FILENO);
+//		free(full);
+//		free_scene(details);
+//		ft_putstr_fd("Error\nEmpty line detected in map\n", STDERR_FILENO);
+		load_error("Empty line detected in map", full, NULL, details);
 		return (NULL);
 	}
 	if (!valid_map_elem(full) || !valid_num_player_pos(full))
 	{
-		free(full);
-		free_scene(details);
+//		free(full);
+//		free_scene(details);
+		load_error(NULL, full, NULL, details);
 		return (NULL);
 	}
 	details->map = ft_split(full, '\n');//split the map by newlines
