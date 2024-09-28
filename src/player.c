@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:42:49 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/27 18:27:46 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 14:55:31 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ void    move_player(t_mlx *mlx, double move_x, double move_y)
         mlx->ply->player_x = new_x;
         mlx->ply->player_y = new_y;
     }
-    printf("Player moved to: (%.15f, %.15f)\n", mlx->ply->player_x, mlx->ply->player_y);
+    //printf("Player moved to: (%.15f, %.15f)\n", mlx->ply->player_x, mlx->ply->player_y);
 }

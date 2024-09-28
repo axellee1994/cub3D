@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 13:45:11 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 15:29:43 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,17 @@
 # define MINUS 65453
 # define ESC 65307
 
-// Minimap
+// Minimap (COLOUR APPLICATION IS IN A,B,G,R)
 # define MINIMAP_SCALE 0.2 // Scale of the minimap relative to the main view
 # define MINIMAP_TILE_SIZE 6 // Assuming TILE_SIZE is 30 and MINIMAP_SCALE is 0.2
-# define MINIMAP_PLAYER_SIZE 4
-# define MINIMAP_BORDER_COLOR 0x000000FF // Black
+# define MINIMAP_PLAYER_SIZE 3
+# define MINIMAP_BORDER_COLOR 0xFFFFFFFF // Black
 # define MINIMAP_PLAYER_COLOR 0xFF0000FF // Red
 # define MINIMAP_WALL_COLOR 0x808080FF   // Gray
 # define MINIMAP_FLOOR_COLOR 0xFFFFFFFF  // White
 # define FOV_LINE_COLOR 0x0000FF         // Blue
 # define FOV_MIDDLE_LINE_COLOR 0xFF0000  // Red
+# define MINIMAP_OUTSIDE_COLOR 0xFF808080 // Dark Gray
 
 // Replace all instances of M_PI with PI in your code
 typedef struct s_player // the player structure
@@ -153,6 +154,8 @@ typedef struct s_minimap // minimap
 	int tile_size;
 	int start_x;
 	int start_y;
+	double scale;
+	
 }				t_minimap;
 
 typedef struct s_point // draw_fovv_line
@@ -212,7 +215,6 @@ void			draw_minimap_fov(t_mlx *mlx, t_minimap *minimap);
 void			draw_rectangle(t_mlx *mlx, t_point pos, int size, int color);
 void			draw_circle(t_mlx *mlx, t_point center, int radius, int color);
 void			init_minimap(t_mlx *mlx, t_minimap *minimap);
-void			draw_minimap_tile(t_mlx *mlx, t_point pos, int color);
 void			draw_minimap_player(t_mlx *mlx, t_minimap *minimap);
 void			draw_minimap(t_mlx *mlx);
 

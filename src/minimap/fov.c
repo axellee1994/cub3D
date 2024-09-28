@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 13:06:52 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 13:47:01 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 15:30:34 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ static void	draw_fov_line(t_mlx *mlx, t_minimap *minimap, double angle,
 	t_point	end;
 	int		line_length;
 
-	line_length = minimap->width / 6;
-	start.x = (mlx->ply->player_x / TILE_SIZE) * minimap->tile_size
-		+ minimap->start_x;
-	start.y = (mlx->ply->player_y / TILE_SIZE) * minimap->tile_size
-		+ minimap->start_y;
+	line_length = minimap->width / 4;
+	start.x = minimap->width / 2 + minimap->start_x;
+	start.y = minimap->height / 2 + minimap->start_y;
 	end.x = start.x + cos(angle) * line_length;
 	end.y = start.y + sin(angle) * line_length;
 	draw_line(mlx, start, end, color);
