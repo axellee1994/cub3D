@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:11:13 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 16:00:03 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 23:09:52 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	draw_minimap(t_mlx *mlx)
 	init_minimap(mlx, &minimap);
 	draw_minimap_recursive(mlx, &minimap, 0, 0);
 	draw_minimap_player(mlx, &minimap);
-	draw_minimap_fov(mlx, &minimap);
 	border_pos.x = minimap.start_x - 1;
 	border_pos.y = minimap.start_y - 1;
 	border_size = minimap.width;
