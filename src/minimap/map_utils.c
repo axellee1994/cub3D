@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:59:40 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 15:41:21 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/28 15:58:32 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ void	draw_circle(t_mlx *mlx, t_point center, int radius, int color)
 	}
 }
 
-void	init_minimap(t_mlx *mlx, t_minimap *minimap)
+void init_minimap(t_mlx *mlx, t_minimap *minimap)
 {
-	(void)mlx;
-	minimap->width = 200;
-	minimap->height = 200;
-	minimap->tile_size = MINIMAP_TILE_SIZE;
-	minimap->start_x = 10;
-	minimap->start_y = 10;
+    (void)mlx;
+    minimap->width = 200;
+    minimap->height = 200;
+    minimap->tile_size = MINIMAP_TILE_SIZE * 1.5; // Increase tile size for zoom effect
+    minimap->start_x = 10;
+    minimap->start_y = 10;
 }
 
 void	draw_minimap_player(t_mlx *mlx, t_minimap *minimap)
