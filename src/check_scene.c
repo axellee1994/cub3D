@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:28:37 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/29 18:50:44 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/29 21:57:54 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int	check_scene(t_scene *det)
 	if (!det)
 		return (0);
 	if (!check_color_val(det->floor) || !check_color_val(det->ceiling))
+	{
+		load_error("Invalid floor/ceiling color value", NULL, NULL, NULL);
 		return (0);
+	}
 	if (!check_tex_file(det->north) || !check_tex_file(det->south)
 		|| !check_tex_file(det->east) || !check_tex_file(det->west))
 		return (0);
