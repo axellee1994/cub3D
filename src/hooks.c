@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:26:10 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 18:52:12 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 19:56:30 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	key_press(int keycode, t_mlx *mlx)
 		reset_player(mlx);
 	else if (keycode == M)
 		mlx->mouse_enabled = !mlx->mouse_enabled;
+	if (keycode == M && mlx->mouse_enabled)
+		mlx_mouse_move(mlx->mlx, mlx->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	return (0);
 }
 
