@@ -1,7 +1,7 @@
 NO ./textures/n_tex.xpm
 SO ./textures/s_tex.xpm
-SO ./textures/n_tex.xpm
 WE ./textures/w_tex.xpm
+WE ./textures/e_tex.xpm
 EA ./textures/e_tex.xpm
 
 F 220, 100, 0       

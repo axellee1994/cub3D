@@ -1,10 +1,10 @@
-NO ./textures/n_tex.xpm
-SO ./textures/s_tex.xpm
-WE ./textures/w_tex.xpm
-EA ./textures/e_tex.xpm
+NO ./textures/NORTH1.xpm
+SO ./textures/SOUTH1.xpm
+WE ./textures/WEST1.xpm
+EA ./textures/EAST1.xpm
 
-F 200, 100, 100
-C 220, 250, 255
+F 135, 62, 35       
+C 171, 219, 227
 
  1111 11111111111111111111111111111111111
  1001 10000000000000110000000000000000001
