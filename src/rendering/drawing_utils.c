@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 17:48:01 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 23:07:29 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,44 +45,45 @@ int	get_texture_color(double temp_x, double temp_y, t_img *texture)
 	return (*pixel);
 }
 
+double	get_texture_intersect(t_mlx *mlx)
+{
+	double	intersect;
+
+	if (mlx->ray->flag == 0)
+		intersect = mlx->ply->player_y + mlx->ray->distance
+			* sin(mlx->ray->ray_ngl);
+	else
+		intersect = mlx->ply->player_x + mlx->ray->distance
+			* cos(mlx->ray->ray_ngl);
+	intersect = fmod(intersect, TILE_SIZE) / TILE_SIZE;
+	return (intersect);
+}
+
 void	draw_wall(t_mlx *mlx, int ray, int start, int end)
 {
 	int		y;
 	double	tex_x;
 	double	tex_y;
-	double	wall_x;
-	t_img	*current_texture;
 
-	if (mlx->ray->flag == 0) // Vertical intersection
-		wall_x = mlx->ply->player_y + mlx->ray->distance
-			* sin(mlx->ray->ray_ngl);
-	else // Horizontal intersection
-		wall_x = mlx->ply->player_x + mlx->ray->distance
-			* cos(mlx->ray->ray_ngl);
-	wall_x = fmod(wall_x, TILE_SIZE);
-	tex_x = wall_x / TILE_SIZE;
-	if (mlx->current_wall_color == 1)
-		current_texture = mlx->dt->north;
-	else if (mlx->current_wall_color == 2)
-		current_texture = mlx->dt->east;
-	else if (mlx->current_wall_color == 3)
-	{
-		current_texture = mlx->dt->south;
-		tex_x = 1 - tex_x;
-	}
-	else if (mlx->current_wall_color == 4)
-	{
-		current_texture = mlx->dt->west;
-		tex_x = 1 - tex_x;
-	}
-	else
-		return ; // Invalid texture, should not happen
+	tex_x = get_texture_intersect(mlx);
 	y = fmax(0, start);
 	while (y <= fmin(SCREEN_HEIGHT - 1, end))
 	{
 		tex_y = (double)(y - start) / (end - start);
-		draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y,
-				current_texture));
+		if (mlx->current_wall_color == 1)
+			draw_pixel(mlx, ray, y,
+				get_texture_color(tex_x, tex_y, mlx->dt->north));
+		else if (mlx->current_wall_color == 2)
+			draw_pixel(mlx, ray, y,
+				get_texture_color(tex_x, tex_y, mlx->dt->east));
+		else if (mlx->current_wall_color == 3)
+			draw_pixel(mlx, ray, y,
+				get_texture_color(1 - tex_x, tex_y, mlx->dt->south));
+		else if (mlx->current_wall_color == 4)
+			draw_pixel(mlx, ray, y,
+				get_texture_color(1 - tex_x, tex_y, mlx->dt->west));
+		else
+			return ;
 		y++;
 	}
 }
