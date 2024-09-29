@@ -6,34 +6,37 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:11:13 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 23:09:52 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 12:12:04 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	draw_minimap_tile_at(t_mlx *mlx, t_minimap *minimap, int x, int y)
+static void draw_minimap_tile_at(t_mlx *mlx, t_minimap *minimap, int x, int y)
 {
-	t_point	pos;
-	int		map_x;
-	int		map_y;
+    t_point pos;
+    int     map_x;
+    int     map_y;
 
-	map_x = (mlx->ply->player_x / TILE_SIZE) - (minimap->width / (2
-				* minimap->tile_size)) + x;
-	map_y = (mlx->ply->player_y / TILE_SIZE) - (minimap->height / (2
-				* minimap->tile_size)) + y;
-	pos.x = x * minimap->tile_size + minimap->start_x;
-	pos.y = y * minimap->tile_size + minimap->start_y;
-	if (map_x >= 0 && map_x < mlx->dt->map_width && map_y >= 0
-		&& map_y < mlx->dt->map_height)
-	{
-		if (mlx->dt->map2d[map_y][map_x] == '1')
-			draw_rectangle(mlx, pos, minimap->tile_size, MINIMAP_WALL_COLOR);
-		else
-			draw_rectangle(mlx, pos, minimap->tile_size, MINIMAP_FLOOR_COLOR);
-	}
-	else
-		draw_rectangle(mlx, pos, minimap->tile_size, MINIMAP_OUTSIDE_COLOR);
+    map_x = (int)(mlx->ply->player_x / TILE_SIZE) + x - (minimap->width / (2 * minimap->tile_size));
+    map_y = (int)(mlx->ply->player_y / TILE_SIZE) + y - (minimap->height / (2 * minimap->tile_size));
+    pos.x = x * minimap->tile_size + minimap->start_x;
+    pos.y = y * minimap->tile_size + minimap->start_y;
+
+    if (map_x >= 0 && map_x < mlx->dt->map_width && map_y >= 0 && map_y < mlx->dt->map_height)
+    {
+        char tile = mlx->dt->map2d[map_y][map_x];
+        if (tile == '1')
+            draw_rectangle(mlx, pos, minimap->tile_size, MINIMAP_WALL_COLOR);
+        else if (tile == '0' || tile == '.' || tile == 'N' || tile == 'S' || tile == 'E' || tile == 'W' || tile == 'n')
+            draw_rectangle(mlx, pos, minimap->tile_size, MINIMAP_FLOOR_COLOR);
+        else
+            draw_rectangle(mlx, pos, minimap->tile_size, MINIMAP_OUTSIDE_COLOR);
+    }
+    else
+    {
+        draw_rectangle(mlx, pos, minimap->tile_size, MINIMAP_OUTSIDE_COLOR);
+    }
 }
 
 static void	draw_rectangle_outline(t_mlx *mlx, t_point pos, int size, int color)
