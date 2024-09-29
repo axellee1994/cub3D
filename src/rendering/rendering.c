@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:59:29 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 17:47:40 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:17:09 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,12 @@ void	render_wall(t_mlx *mlx, int ray, double distance)
 	double	wall_height;
 	int		draw_start;
 	int		draw_end;
+	double	perp_distance;
+	double	angle_diff;
 
-	distance *= cos(mlx->ray->ray_ngl - mlx->ply->angle);
-	wall_height = (TILE_SIZE / distance) * mlx->ply->proj_plane;
+	angle_diff = mlx->ray->ray_ngl - mlx->ply->angle;
+	perp_distance = distance * cos(angle_diff);
+	wall_height = (TILE_SIZE / perp_distance) * mlx->ply->proj_plane;
 	wall_height = fmin(2147483647, wall_height);
 	draw_start = calculate_draw_position(SCREEN_HEIGHT, wall_height, 0);
 	draw_end = calculate_draw_position(SCREEN_HEIGHT, wall_height, 1);

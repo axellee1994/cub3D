@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 17:42:14 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:48:22 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@
 # define SCREEN_WIDTH 1920    // screen width
 # define SCREEN_HEIGHT 1080   // screen height
 # define TILE_SIZE 30         // tile size
-# define FOV 60               // field of view
+# define FOV 90              // field of view
 # define ROTATION_SPEED 0.045 // rotation speed
 # define PLAYER_SPEED 2       // player speed
-# define FPS_LIMIT 60
+# define FPS_LIMIT 90
 # define FRAME_TIME 0.016666667 // Equivalent to 1.0 / 60
+# define MOUSE_SENSITIVITY 0.001
 
 // Maths functions
 # define PI 3.14159265358979323846
@@ -77,6 +78,7 @@
 # define R 114
 # define C 99
 # define V 118
+# define M 109
 # define SPACE 32
 # define PLUS 65451
 # define MINUS 65453
@@ -179,6 +181,7 @@ typedef struct s_mlx // the mlx structure
 	t_player *ply; // the player structure
 	int show_help;
 	int current_wall_color;
+	int mouse_enabled;
 }				t_mlx;
 
 typedef struct s_scene
@@ -202,6 +205,10 @@ typedef struct s_scene
 	unsigned int	ceiling;
 	char			**map;
 }			t_info;*/
+
+// mouse
+int mouse_move(int x, int y, t_mlx *mlx);
+void setup_mouse_hooks(t_mlx *mlx);
 
 // fov
 void			draw_line(t_mlx *mlx, t_point start, t_point end, int color);
@@ -235,7 +242,7 @@ void			hook(t_mlx *mlx, double move_x, double move_y);
 // player
 double			init_player_orientation(t_mlx *mlx);
 void			reset_player(t_mlx *mlx);
-void			rotate_player(t_mlx *mlx, int direction);
+void rotate_player(t_mlx *mlx, float angle);
 void			move_player(t_mlx *mlx, double move_x, double move_y);
 
 // rendering

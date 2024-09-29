@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:26:10 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 17:47:10 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:52:12 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	key_press(int keycode, t_mlx *mlx)
 		mlx->show_help = 1;
 	else if (keycode == R)
 		reset_player(mlx);
+	else if (keycode == M)
+		mlx->mouse_enabled = !mlx->mouse_enabled;
 	return (0);
 }
 
@@ -75,10 +77,28 @@ static void	calculate_movement(t_mlx *mlx, double *move_x, double *move_y)
 	}
 }
 
+int	mouse_move(int x, int y, t_mlx *mlx)
+{
+	static int	center_x = SCREEN_WIDTH / 2;
+	static int	center_y = SCREEN_HEIGHT / 2;
+	int			dx;
+	int			dy;
+
+	dx = x - center_x;
+	dy = y - center_y;
+	(void)dy;
+	if (mlx->mouse_enabled && dx != 0)
+	{
+		rotate_player(mlx, dx * MOUSE_SENSITIVITY);
+		mlx_mouse_move(mlx->mlx, mlx->win, center_x, center_y);
+	}
+	return (0);
+}
+
 void	hook(t_mlx *mlx, double move_x, double move_y)
 {
 	if (mlx->ply->rot)
-		rotate_player(mlx, mlx->ply->rot);
+		rotate_player(mlx, mlx->ply->rot * ROTATION_SPEED);
 	calculate_movement(mlx, &move_x, &move_y);
 	move_player(mlx, move_x, move_y);
 }

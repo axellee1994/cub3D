@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:42:49 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 17:42:23 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:51:54 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	reset_player(t_mlx *mlx)
 }
 
 // Rotate player
-void	rotate_player(t_mlx *mlx, int direction)
+void	rotate_player(t_mlx *mlx, float angle)
 {
-	mlx->ply->angle += ROTATION_SPEED * direction;
-	mlx->ply->angle = nor_angle(mlx->ply->angle + ROTATION_SPEED * direction);
+	mlx->ply->angle += angle;
+	mlx->ply->angle = nor_angle(mlx->ply->angle);
 }
 
 // Move player

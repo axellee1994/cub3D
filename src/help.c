@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:26:06 by axlee             #+#    #+#             */
-/*   Updated: 2024/08/06 12:54:11 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:51:45 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,6 @@ void	display_help(t_mlx *mlx)
 		* line_spacing, text_color, "[ESC]: Exit game");
 	mlx_string_put(mlx->mlx, mlx->win, help_text_x, help_text_y + 5
 		* line_spacing, text_color, "[H]: Toggle help");
+	mlx_string_put(mlx->mlx, mlx->win, help_text_x, help_text_y + 6
+		* line_spacing, text_color, "[M]: Toggle mouse");
 }
