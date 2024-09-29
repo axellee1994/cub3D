@@ -6,10 +6,9 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:28:37 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/27 09:20:17 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:50:44 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3D.h"
 
@@ -32,7 +31,10 @@ int	check_color_val(char **arr)
 			return (0);
 		i++;
 	}
-	return (i == 3);  // Ensure exactly 3 color components
+	if (i == 3)
+		return (1);
+	else
+		return (0);
 }
 
 int	check_tex_file(char *file)
@@ -52,7 +54,7 @@ int	check_tex_file(char *file)
 		ft_putstr_fd("Error\nFailed to open .xpm file: ", STDERR_FILENO);
 		ft_putstr_fd(file, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
-		return (0);	
+		return (0);
 	}
 	close(fd);
 	return (1);
@@ -64,9 +66,8 @@ int	check_scene(t_scene *det)
 		return (0);
 	if (!check_color_val(det->floor) || !check_color_val(det->ceiling))
 		return (0);
-	if (!check_tex_file(det->north) || !check_tex_file(det->south) || 
-		!check_tex_file(det->east) || !check_tex_file(det->west))
-		return (0); 
-//	check map(flood fill on 0 and throw error if reach side or space?)
+	if (!check_tex_file(det->north) || !check_tex_file(det->south)
+		|| !check_tex_file(det->east) || !check_tex_file(det->west))
+		return (0);
 	return (1);
 }
