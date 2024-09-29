@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:59:40 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 23:18:57 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 17:38:17 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ void	draw_rectangle(t_mlx *mlx, t_point pos, int size, int color)
 void	draw_triangle(t_mlx *mlx, t_point center, int size, int color)
 {
 	double	angle;
+	t_point	p1;
+	t_point	p2;
+	t_point	p3;
 
-	t_point p1, p2, p3;
 	angle = mlx->ply->angle;
 	p1.x = center.x + cos(angle) * size / 2;
 	p1.y = center.y + sin(angle) * size / 2;
@@ -63,7 +65,7 @@ void	draw_minimap_player(t_mlx *mlx, t_minimap *minimap)
 	t_point	player_pos;
 	int		triangle_size;
 
-	triangle_size = MINIMAP_PLAYER_SIZE * 2.5;
+	triangle_size = MINIMAP_PLAYER_SIZE * 2;
 	player_pos.x = minimap->width / 2 + minimap->start_x;
 	player_pos.y = minimap->height / 2 + minimap->start_y;
 	draw_triangle(mlx, player_pos, triangle_size, MINIMAP_PLAYER_COLOR);
