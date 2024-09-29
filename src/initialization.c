@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:21:58 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 12:17:49 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 17:42:19 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	init_the_player(t_mlx *mlx)
 	mlx->ply->player_y = mlx->dt->player_y_position * TILE_SIZE + TILE_SIZE / 2;
 	mlx->ply->fov_rd = (FOV * PI) / 180;
 	mlx->ply->angle = init_player_orientation(mlx);
-	mlx->ply->tilt = 0;
-	mlx->ply->tilt_angle = 0;
 	mlx->ply->proj_plane = (SCREEN_WIDTH / 2) / tan(mlx->ply->fov_rd / 2);
 	mlx->ply->rot = 0;
 	mlx->ply->left_to_right = 0;

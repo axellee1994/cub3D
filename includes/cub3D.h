@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 23:14:35 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 17:42:14 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 # define FOV 60               // field of view
 # define ROTATION_SPEED 0.045 // rotation speed
 # define PLAYER_SPEED 2       // player speed
-# define TILT_SPEED 0.01
-# define MAX_TILT 0.5 // 30 degrees, adjust as needed
 # define FPS_LIMIT 60
 # define FRAME_TIME 0.016666667 // Equivalent to 1.0 / 60
 
@@ -106,8 +104,6 @@ typedef struct s_player // the player structure
 	int rot;           // rotation flag
 	int left_to_right; // left right flag
 	int up_to_down;    // up down flag
-	int tilt;
-	double tilt_angle;
 	double proj_plane;
 	int help;
 }				t_player;
