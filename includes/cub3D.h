@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 12:19:46 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 12:37:22 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
+# define AQUA 0x0000FFFF
+# define MAGENTA 0xFFFF00FF
 
 // Keyboard Mapping
 # define UP 65362
@@ -74,8 +76,6 @@
 # define MINIMAP_PLAYER_COLOR 0xFF0000FF
 # define MINIMAP_WALL_COLOR 0x808080FF
 # define MINIMAP_FLOOR_COLOR 0xFFFFFFFF
-# define FOV_LINE_COLOR 0x0000FF
-# define FOV_MIDDLE_LINE_COLOR 0xFF0000
 # define MINIMAP_OUTSIDE_COLOR 0xFF808080
 
 // Player Structure

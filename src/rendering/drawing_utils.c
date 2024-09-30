@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 23:07:29 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/30 12:37:25 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	get_texture_color(double temp_x, double temp_y, t_img *texture)
 	if (!texture || texture->w == 0 || texture->h == 0)
 	{
 		ft_putstr_fd("Error: Invalid texture\n", STDERR_FILENO);
-		return (0xFF0000);
+		return (RED);
 	}
 	x = (int)(texture->w * temp_x) % texture->w;
 	y = (int)(texture->h * temp_y) % texture->h;
@@ -38,7 +38,7 @@ int	get_texture_color(double temp_x, double temp_y, t_img *texture)
 	{
 		ft_putstr_fd("Warning: Texture coordinates out of bounds\n",
 			STDERR_FILENO);
-		return (0xFF00FF);
+		return (MAGENTA);
 	}
 	pixel = (unsigned int *)(texture->addr + (y * texture->line_length + x
 				* (texture->bits_per_pixel / 8)));

@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:45:17 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/28 23:06:35 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 12:37:29 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	load_single_texture(t_mlx *mlx, t_img **texture, char *file,
 	int		result;
 
 	msg = ft_strjoin("Loading ", direction);
-	mlx_string_put(mlx->mlx, mlx->win, 960, 540, 0x00FFFF, msg);
+	mlx_string_put(mlx->mlx, mlx->win, 960, 540, AQUA, msg);
 	free(msg);
 	*texture = new_texture(mlx, file);
 	if (!(*texture))
