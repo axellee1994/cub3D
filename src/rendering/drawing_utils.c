@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:34 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 12:37:25 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 16:55:58 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,17 @@ void	draw_wall(t_mlx *mlx, int ray, int start, int end)
 	{
 		tex_y = (double)(y - start) / (end - start);
 		if (mlx->current_wall_color == 1)
-			draw_pixel(mlx, ray, y,
-				get_texture_color(tex_x, tex_y, mlx->dt->north));
+			draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y,
+					mlx->dt->north));
 		else if (mlx->current_wall_color == 2)
-			draw_pixel(mlx, ray, y,
-				get_texture_color(tex_x, tex_y, mlx->dt->east));
+			draw_pixel(mlx, ray, y, get_texture_color(tex_x, tex_y,
+					mlx->dt->east));
 		else if (mlx->current_wall_color == 3)
-			draw_pixel(mlx, ray, y,
-				get_texture_color(1 - tex_x, tex_y, mlx->dt->south));
+			draw_pixel(mlx, ray, y, get_texture_color(1 - tex_x, tex_y,
+					mlx->dt->south));
 		else if (mlx->current_wall_color == 4)
-			draw_pixel(mlx, ray, y,
-				get_texture_color(1 - tex_x, tex_y, mlx->dt->west));
+			draw_pixel(mlx, ray, y, get_texture_color(1 - tex_x, tex_y,
+					mlx->dt->west));
 		else
 			return ;
 		y++;

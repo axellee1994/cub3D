@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 15:32:40 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/30 16:59:24 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1010
 # define TILE_SIZE 30
-# define FOV 90
+# define FOV 60
 # define ROTATION_SPEED 0.045
 # define PLAYER_SPEED 2
-# define FPS_LIMIT 90
+# define FPS_LIMIT 60
 # define FRAME_TIME 0.016666667
 # define MOUSE_SENSITIVITY 0.001
 
@@ -211,6 +211,8 @@ int					get_wall_color(t_mlx *mlx, int flag);
 double				get_texture_intersect(t_mlx *mlx);
 void				draw_wall(t_mlx *mlx, int ray, int top_pixel,
 						int bottom_pixel);
+int					calculate_draw_position(int screen_height,
+						double wall_height, int is_end);
 void				render_wall(t_mlx *mlx, int ray, double adjusted_distance);
 
 // check_scene

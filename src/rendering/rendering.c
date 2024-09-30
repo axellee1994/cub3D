@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:59:29 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 18:17:09 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 16:58:46 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	get_wall_color(t_mlx *mlx, int flag)
 	}
 }
 
+// Calculate the draw position based on the wall height and screen height
 int	calculate_draw_position(int screen_height, double wall_height, int is_end)
 {
 	double	base_position;
@@ -53,8 +54,11 @@ void	render_wall(t_mlx *mlx, int ray, double distance)
 	double	perp_distance;
 	double	angle_diff;
 
-	angle_diff = mlx->ray->ray_ngl - mlx->ply->angle;
-	perp_distance = distance * cos(angle_diff);
+	angle_diff = nor_angle(mlx->ray->ray_ngl - mlx->ply->angle);
+	if (distance > 0.0001)
+		perp_distance = distance * cos(angle_diff);
+	else
+		perp_distance = 0.1;
 	wall_height = (TILE_SIZE / perp_distance) * mlx->ply->proj_plane;
 	wall_height = fmin(2147483647, wall_height);
 	draw_start = calculate_draw_position(SCREEN_HEIGHT, wall_height, 0);
