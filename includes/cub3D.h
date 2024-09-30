@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 20:54:06 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 22:36:03 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@
 # define MINIMAP_TILE_SIZE 6
 # define MINIMAP_PLAYER_SIZE 3
 # define MINIMAP_BORDER_COLOR 0xFFFFFFFF
-# define MINIMAP_PLAYER_COLOR 0xFF0000FF
+# define MINIMAP_PLAYER_COLOR 0xFFEE833B
 # define MINIMAP_WALL_COLOR 0x808080FF
 # define MINIMAP_FLOOR_COLOR 0xFFFFFFFF
 # define MINIMAP_OUTSIDE_COLOR 0xFF808080
@@ -312,7 +312,7 @@ void				draw_rectangle(t_mlx *mlx, t_minimap pos, int size,
 						int color);
 void				draw_triangle(t_mlx *mlx, t_minimap center, int size,
 						int color);
-void				init_minimap(t_mlx *mlx, t_minimap *minimap);
+void				init_minimap(t_minimap *minimap);
 void				draw_minimap_player(t_mlx *mlx, t_minimap *minimap);
 
 // minimap

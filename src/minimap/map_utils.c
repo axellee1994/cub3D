@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:59:40 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 21:46:53 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 22:30:29 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,13 @@ void	draw_triangle(t_mlx *mlx, t_minimap center, int size, int color)
 	p3.x = center.x + cos(angle - 2.0944) * size / 2;
 	p3.y = center.y + sin(angle - 2.0944) * size / 2;
 	draw_line(mlx, p1, p2, color);
-	draw_line(mlx, p2, p3, color);
 	draw_line(mlx, p3, p1, color);
 }
 
-void	init_minimap(t_mlx *mlx, t_minimap *minimap)
+void	init_minimap(t_minimap *minimap)
 {
-	(void)mlx;
-	minimap->width = 200;
-	minimap->height = 200;
+	minimap->width = 210;
+	minimap->height = 210;
 	minimap->tile_size = MINIMAP_TILE_SIZE * 1.5;
 	minimap->start_x = 10;
 	minimap->start_y = 10;
