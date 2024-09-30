@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 18:11:33 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/30 19:55:45 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,10 +281,11 @@ int					check_tex_file(char *file);
 int					check_scene(t_scene *det);
 
 //process_map
-void				get_map_dimensions(char **map, t_data *data);
+int					get_map_dimensions(char **map, t_data *data);
 void				get_player_position(char **map, t_data *data);
+void				assign_map_value(char **prev, char *line, int row,
+						t_data *data);
 char				**convert_map(char **prev, t_data *data);
 void				map_fill(int x, int y, t_data *data, int *valid);
-t_data				*process_map(t_scene *scene);
 
 #endif
