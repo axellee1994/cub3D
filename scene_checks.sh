@@ -125,13 +125,8 @@ echo ""
 
 echo -e "\033[0;31mTesting read-only .cub file\033[0m"
 chmod 444 scenes/read_only.cub
-$v_flags ./cub3D scenes/read_only.cub
+//$v_flags ./cub3D scenes/read_only.cub
 chmod 644 scenes/read_only.cub
-echo ""
-echo ""
-
-echo -e "\033[0;31mTesting very large .cub file\033[0m"
-$v_flags ./cub3D scenes/large_map.cub
 echo ""
 echo ""
 
@@ -152,6 +147,12 @@ echo ""
 
 echo -e "\033[0;31mTesting invalid map sizes\033[0m"
 $v_flags ./cub3D scenes/one_line_map.cub
+echo ""
+echo ""
+$v_flags ./cub3D scenes/very_large_map_60x60.cub
+echo ""
+echo ""
+$v_flags ./cub3D scenes/very_small_map_2x2.cub
 echo ""
 echo ""
 

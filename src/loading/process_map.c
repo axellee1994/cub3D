@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:04:26 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/30 21:30:35 by axlee            ###   ########.fr       */
+/*   Updated: 2024/10/01 01:35:04 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	get_map_dimensions(char **map, t_data *data)
 			cols = temp;
 		rows++;
 	}
-	if (rows <= 0 || cols <= 0)
+	if (rows < 3 || cols < 3 || rows > 50 || cols > 50)
 	{
 		free_map_data(data);
 		load_error("Invalid map dimensions", NULL, NULL, NULL);
