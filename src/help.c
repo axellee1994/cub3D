@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:26:06 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 14:17:54 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 15:36:31 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ void	display_help(t_mlx *mlx)
 	int	help_text_y;
 	int	text_color;
 	int	line_spacing;
+	int	total_height;
 
 	text_color = BLACK;
 	line_spacing = 20;
 	help_text_x = 10;
-	help_text_y = SCREEN_HEIGHT - line_spacing * 9;
+	total_height = 5 * line_spacing;
+	help_text_y = SCREEN_HEIGHT - total_height - 10;
 	mlx_string_put(mlx->mlx, mlx->win, help_text_x, help_text_y, text_color,
 		"Keybindings:");
 	mlx_string_put(mlx->mlx, mlx->win, help_text_x, help_text_y + line_spacing,

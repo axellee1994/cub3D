@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 12:37:22 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 15:32:40 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 // Game Environments
 # define SCREEN_WIDTH 1920
-# define SCREEN_HEIGHT 1080
+# define SCREEN_HEIGHT 1010
 # define TILE_SIZE 30
 # define FOV 90
 # define ROTATION_SPEED 0.045
