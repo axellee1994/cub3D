@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 19:55:45 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/30 20:46:49 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ typedef struct s_ray
 {
 	double			ray_ngl;
 	double			distance;
-	double			h_intersect;
-	double			v_intersect;
 	int				flag;
 }					t_ray;
 
@@ -179,59 +177,17 @@ typedef struct s_scene
 	char			**map;
 }					t_scene;
 
-// Function prototypes
+/******************************************************************************
+	Function prototypes
+******************************************************************************/
 
-// minimap
-void				draw_line(t_mlx *mlx, t_minimap start, t_minimap end,
-						int color);
-void				draw_rectangle(t_mlx *mlx, t_minimap pos, int size,
-						int color);
-void				draw_triangle(t_mlx *mlx, t_minimap center, int size,
-						int color);
-void				init_minimap(t_mlx *mlx, t_minimap *minimap);
-void				draw_minimap_player(t_mlx *mlx, t_minimap *minimap);
-void				draw_minimap(t_mlx *mlx);
-
-// raycasting
-int					unit_circle(float angle, char c);
-int					inter_check(float angle, float *inter, float *step,
-						int is_horizon);
-float				get_h_inter(t_mlx *mlx, float angl);
-float				get_v_inter(t_mlx *mlx, float angl);
-int					wall_hit(double x, double y, t_mlx *mlx);
-void				cast_rays(t_mlx *mlx);
-
-// rendering
-void				init_image_buffer(t_mlx *mlx);
-void				draw_pixel(t_mlx *mlx, int x, int y, int color);
-double				nor_angle(double angle);
-void				draw_floor_ceiling(t_mlx *mlx, int ray, int ceiling_height,
-						int floor_start);
-int					get_wall_color(t_mlx *mlx, int flag);
-double				get_texture_intersect(t_mlx *mlx);
-void				draw_wall(t_mlx *mlx, int ray, int top_pixel,
-						int bottom_pixel);
-int					calculate_draw_position(int screen_height,
-						double wall_height, int is_end);
-void				render_wall(t_mlx *mlx, int ray, double adjusted_distance);
-
-// free_and_exit
-void				free_textures(t_mlx *mlx);
-void				free_map_data(t_data *dt);
-int					free_and_exit(t_mlx *mlx);
-
-// help
-void				display_help(t_mlx *mlx);
-
-// hooks
-int					key_press(int keycode, t_mlx *mlx);
-int					key_release(int keycode, t_mlx *mlx);
-void				hook(t_mlx *mlx, double move_x, double move_y);
+//main
+t_data				*process_map(t_scene *scene);
+int					check_and_initialize(int argc, char **argv, t_data **data,
+						t_scene **scene);
 
 // initialization
 int					game_loop(t_mlx *mlx);
-int					check_and_initialize(int argc, char **argv, t_data **data,
-						t_scene **scene);
 void				init_the_player(t_mlx *mlx);
 void				start_the_game(t_data *dt, t_scene *scene);
 
@@ -243,31 +199,44 @@ int					init_single_texture(t_mlx *mlx, t_img **texture, char *file,
 int					init_wall_texture(t_mlx *mlx, t_scene *scene);
 void				init_textures(t_mlx *mlx, t_scene *scene);
 
-// mouse
-int					mouse_move(int x, int y, t_mlx *mlx);
-void				setup_mouse_hooks(t_mlx *mlx);
-
 // player
 double				init_player_orientation(t_mlx *mlx);
 void				reset_player(t_mlx *mlx);
 void				rotate_player(t_mlx *mlx, float angle);
 void				move_player(t_mlx *mlx, double move_x, double move_y);
 
-//**loading folder
-//input_file
+// hooks
+int					key_press(int keycode, t_mlx *mlx);
+int					key_release(int keycode, t_mlx *mlx);
+int					mouse_rotation(int x, int y, t_mlx *mlx);
+void				hook(t_mlx *mlx, double move_x, double move_y);
+
+// help
+void				display_help(t_mlx *mlx);
+
+// free_and_exit
+void				free_textures(t_mlx *mlx);
+void				free_map_data(t_data *dt);
+int					free_and_exit(t_mlx *mlx);
+
+/*************************************
+		Loading
+*************************************/
+
+// input_file
 int					valid_map_elem(char *map);
 int					valid_num_player_pos(char *map);
 int					read_map(int fd, char *line, t_scene *scene);
 int					read_details(int fd, t_scene *scene);
 t_scene				*read_cub_file(char *file);
 
-//scene_loading
+// scene_loading
 int					get_tex_file(char *line, t_scene *scene);
 int					get_color_val(char *line, t_scene *scene);
 int					get_tex_info(char *line, t_scene *scene);
 char				*read_texture(int fd, t_scene **scene);
 
-//loading_utils
+// loading_utils
 char				*ft_strjoin_free(char *s1, char *s2);
 int					is_empty_line(char *line);
 int					is_tex_info(char *line);
@@ -275,17 +244,78 @@ void				free_scene(t_scene *scene);
 void				load_error(char *msg, char *line, char **arr,
 						t_scene *scene);
 
-//check_scene
+// check_scene
 int					check_color_val(char **arr);
 int					check_tex_file(char *file);
 int					check_scene(t_scene *det);
 
-//process_map
+// process_map
 int					get_map_dimensions(char **map, t_data *data);
 void				get_player_position(char **map, t_data *data);
 void				assign_map_value(char **prev, char *line, int row,
 						t_data *data);
 char				**convert_map(char **prev, t_data *data);
 void				map_fill(int x, int y, t_data *data, int *valid);
+
+/*************************************
+		Raycasting
+*************************************/
+
+// angle_utils
+int					unit_circle(float angle, char c);
+
+// intersection_utils
+int					inter_check(float angle, float *inter, float *step,
+						int is_horizon);
+
+// intersection
+float				get_h_inter(t_mlx *mlx, float angl);
+float				get_v_inter(t_mlx *mlx, float angl);
+
+// raycasting
+int					wall_hit(double x, double y, t_mlx *mlx);
+void				cast_rays(t_mlx *mlx);
+
+/*************************************
+		Rendering
+*************************************/
+
+// pixel_utils
+void				init_image_buffer(t_mlx *mlx);
+void				draw_pixel(t_mlx *mlx, int x, int y, int color);
+
+// drawing_utils
+double				nor_angle(double angle);
+int					get_texture_color(double temp_x, double temp_y,
+						t_img *texture);
+double				get_texture_intersect(t_mlx *mlx);
+void				draw_wall(t_mlx *mlx, int ray, int start, int end);
+void				draw_floor_ceiling(t_mlx *mlx, int ray, int ceiling_height,
+						int floor_start);
+
+// rendering
+int					get_wall_color(t_mlx *mlx, int flag);
+int					calculate_draw_position(int screen_height,
+						double wall_height, int is_end);
+void				render_wall(t_mlx *mlx, int ray, double distance);
+
+/*************************************
+		Minimap
+*************************************/
+
+// draw_line
+void				draw_line(t_mlx *mlx, t_minimap start, t_minimap end,
+						int color);
+
+// map_utils
+void				draw_rectangle(t_mlx *mlx, t_minimap pos, int size,
+						int color);
+void				draw_triangle(t_mlx *mlx, t_minimap center, int size,
+						int color);
+void				init_minimap(t_mlx *mlx, t_minimap *minimap);
+void				draw_minimap_player(t_mlx *mlx, t_minimap *minimap);
+
+// minimap
+void				draw_minimap(t_mlx *mlx);
 
 #endif

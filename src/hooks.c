@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:26:10 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 19:56:30 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/30 20:24:46 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	calculate_movement(t_mlx *mlx, double *move_x, double *move_y)
 	}
 }
 
-int	mouse_move(int x, int y, t_mlx *mlx)
+int	mouse_rotation(int x, int y, t_mlx *mlx)
 {
 	static int	center_x = SCREEN_WIDTH / 2;
 	static int	center_y = SCREEN_HEIGHT / 2;

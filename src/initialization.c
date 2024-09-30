@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:21:58 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 18:52:06 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 20:34:33 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	game_loop(t_mlx *mlx)
 		load_error("Uninitialized game data", NULL, NULL, NULL);
 		free_and_exit(mlx);
 	}
-	mouse_move(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, mlx);
+	mouse_rotation(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, mlx);
 	hook(mlx, 0, 0);
 	cast_rays(mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
@@ -74,6 +74,6 @@ void	start_the_game(t_data *dt, t_scene *scene)
 	mlx_hook(mlx.win, KeyPress, KeyPressMask, key_press, &mlx);
 	mlx_hook(mlx.win, KeyRelease, KeyReleaseMask, key_release, &mlx);
 	mlx_hook(mlx.win, 17, 0, free_and_exit, &mlx);
-	mlx_hook(mlx.win, 6, 1L << 6, mouse_move, &mlx);
+	mlx_hook(mlx.win, 6, 1L << 6, mouse_rotation, &mlx);
 	mlx_loop(mlx.mlx);
 }

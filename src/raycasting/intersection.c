@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:15 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 16:55:49 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 20:46:36 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ float	get_h_inter(t_mlx *mlx, float angl)
 		h_x += x_step;
 		h_y += y_step;
 	}
-	mlx->ray->h_intersect = fmod(h_x, TILE_SIZE) / TILE_SIZE;
 	return (sqrt(pow(h_x - mlx->ply->player_x, 2) + pow(h_y
 				- mlx->ply->player_y, 2)));
 }
@@ -61,7 +60,6 @@ float	get_v_inter(t_mlx *mlx, float angl)
 		v_x += x_step;
 		v_y += y_step;
 	}
-	mlx->ray->v_intersect = fmod(v_x, TILE_SIZE) / TILE_SIZE;
 	return (sqrt(pow(v_x - mlx->ply->player_x, 2) + pow(v_y
 				- mlx->ply->player_y, 2)));
 }
