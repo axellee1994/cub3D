@@ -19,7 +19,7 @@ $v_flags ./cub3D scenes/basic
 echo ""
 echo ""
 
-echo -e "\033[0;31mTesting no file extension\033[0m"
+echo -e "\033[0;31mTesting invalid file extension\033[0m"
 $v_flags ./cub3D scenes/basic.ber
 echo ""
 echo ""
@@ -107,7 +107,6 @@ $v_flags ./cub3D scenes/invalid_ceiling.cub
 echo ""
 echo ""
 
-
 echo -e "\033[0;31mTesting empty line\033[0m"
 $v_flags ./cub3D scenes/empty_line_middle.cub
 echo ""
@@ -124,16 +123,36 @@ $v_flags ./cub3D scenes/multi_player_same_direction.cub
 echo ""
 echo ""
 
+echo -e "\033[0;31mTesting read-only .cub file\033[0m"
+chmod 444 scenes/read_only.cub
+$v_flags ./cub3D scenes/read_only.cub
+chmod 644 scenes/read_only.cub
+echo ""
+echo ""
 
+echo -e "\033[0;31mTesting very large .cub file\033[0m"
+$v_flags ./cub3D scenes/large_map.cub
+echo ""
+echo ""
 
+echo -e "\033[0;31mTesting invalid characters in map\033[0m"
+$v_flags ./cub3D scenes/invalid_characters.cub
+echo ""
+echo ""
 
+echo -e "\033[0;31mTesting unclosed map\033[0m"
+$v_flags ./cub3D scenes/unclosed_map.cub
+echo ""
+echo ""
 
+echo -e "\033[0;31mTesting edge cases for color values\033[0m"
+$v_flags ./cub3D scenes/color_edge_cases.cub
+echo ""
+echo ""
 
-
-
-
-
-
-
+echo -e "\033[0;31mTesting invalid map sizes\033[0m"
+$v_flags ./cub3D scenes/too_large_map.cub
+echo ""
+echo ""
 
 unset v_flags
