@@ -1,6 +1,5 @@
 NO ./textures/n_tex.xpm
-SO ./textures/s_tex.xpm
-SO ./textures/n_tex.xpm
+SO ./textures/s_tex.xpm ./textures/n_tex.xpm
 WE ./textures/w_tex.xpm
 EA ./textures/e_tex.xpm
 

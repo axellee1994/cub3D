@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 18:48:22 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/29 23:08:15 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ double			nor_angle(double angle);
 void			draw_floor_ceiling(t_mlx *mlx, int ray, int ceiling_height,
 					int floor_start);
 int				get_wall_color(t_mlx *mlx, int flag);
+double			get_texture_intersect(t_mlx *mlx);
 void			draw_wall(t_mlx *mlx, int ray, int top_pixel, int bottom_pixel);
 void			render_wall(t_mlx *mlx, int ray, double adjusted_distance);
 
