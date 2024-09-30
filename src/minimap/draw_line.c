@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 13:12:57 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/28 23:11:29 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 12:15:31 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	get_step_direction(int start, int end)
 	return (-1);
 }
 
-static void	init_line_data(t_point start, t_point end, t_line_data *data)
+static void	init_line_data(t_minimap start, t_minimap end, t_line_data *data)
 {
 	data->dx = abs(end.x - start.x);
 	data->dy = -abs(end.y - start.y);
@@ -28,7 +28,7 @@ static void	init_line_data(t_point start, t_point end, t_line_data *data)
 	data->err = data->dx + data->dy;
 }
 
-static void	update_line(t_point *start, t_line_data *data)
+static void	update_line(t_minimap *start, t_line_data *data)
 {
 	int	e2;
 
@@ -45,7 +45,7 @@ static void	update_line(t_point *start, t_line_data *data)
 	}
 }
 
-void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
+void	draw_line(t_mlx *mlx, t_minimap start, t_minimap end, int color)
 {
 	t_line_data	data;
 

@@ -6,13 +6,13 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:59:40 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 17:38:17 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 12:15:32 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	draw_rectangle(t_mlx *mlx, t_point pos, int size, int color)
+void	draw_rectangle(t_mlx *mlx, t_minimap pos, int size, int color)
 {
 	int	i;
 	int	j;
@@ -31,12 +31,12 @@ void	draw_rectangle(t_mlx *mlx, t_point pos, int size, int color)
 	}
 }
 
-void	draw_triangle(t_mlx *mlx, t_point center, int size, int color)
+void	draw_triangle(t_mlx *mlx, t_minimap center, int size, int color)
 {
 	double	angle;
-	t_point	p1;
-	t_point	p2;
-	t_point	p3;
+	t_minimap	p1;
+	t_minimap	p2;
+	t_minimap	p3;
 
 	angle = mlx->ply->angle;
 	p1.x = center.x + cos(angle) * size / 2;
@@ -62,7 +62,7 @@ void	init_minimap(t_mlx *mlx, t_minimap *minimap)
 
 void	draw_minimap_player(t_mlx *mlx, t_minimap *minimap)
 {
-	t_point	player_pos;
+	t_minimap	player_pos;
 	int		triangle_size;
 
 	triangle_size = MINIMAP_PLAYER_SIZE * 2;

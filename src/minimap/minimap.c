@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:11:13 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/29 17:38:31 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 12:15:31 by axlee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	draw_minimap_tile_at(t_mlx *mlx, t_minimap *minimap, int x, int y)
 {
-	t_point	pos;
+	t_minimap	pos;
 	int		map_x;
 	int		map_y;
 	char	tile;
@@ -41,7 +41,7 @@ static void	draw_minimap_tile_at(t_mlx *mlx, t_minimap *minimap, int x, int y)
 		draw_rectangle(mlx, pos, minimap->tile_size, MINIMAP_OUTSIDE_COLOR);
 }
 
-static void	draw_rectangle_outline(t_mlx *mlx, t_point pos, int size, int color)
+static void	draw_rectangle_outline(t_mlx *mlx, t_minimap pos, int size, int color)
 {
 	int	i;
 
@@ -72,7 +72,7 @@ static void	draw_minimap_recursive(t_mlx *mlx, t_minimap *minimap, int x, int y)
 void	draw_minimap(t_mlx *mlx)
 {
 	t_minimap	minimap;
-	t_point		border_pos;
+	t_minimap		border_pos;
 	int			border_size;
 
 	init_minimap(mlx, &minimap);
