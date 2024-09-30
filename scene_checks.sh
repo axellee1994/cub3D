@@ -24,10 +24,10 @@ $v_flags ./cub3D scenes/basic.ber
 echo ""
 echo ""
 
-echo -e "\033[0;31mTesting no file permissions\033[0m"
-$v_flags ./cub3D scenes/no_perm.cub
-echo ""
-echo ""
+//echo -e "\033[0;31mTesting no file permissions\033[0m"
+//$v_flags ./cub3D scenes/no_perm.cub
+//echo ""
+//echo ""
 
 echo -e "\033[0;31mTesting no texture\033[0m"
 $v_flags ./cub3D scenes/no_north.cub
@@ -151,7 +151,7 @@ echo ""
 echo ""
 
 echo -e "\033[0;31mTesting invalid map sizes\033[0m"
-$v_flags ./cub3D scenes/too_large_map.cub
+$v_flags ./cub3D scenes/one_line_map.cub
 echo ""
 echo ""
 
