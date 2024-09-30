@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:31:14 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 16:59:24 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 18:11:33 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,11 +215,6 @@ int					calculate_draw_position(int screen_height,
 						double wall_height, int is_end);
 void				render_wall(t_mlx *mlx, int ray, double adjusted_distance);
 
-// check_scene
-int					check_color_val(char **arr);
-int					check_tex_file(char *file);
-int					check_scene(t_scene *det);
-
 // free_and_exit
 void				free_textures(t_mlx *mlx);
 void				free_map_data(t_data *dt);
@@ -240,33 +235,13 @@ int					check_and_initialize(int argc, char **argv, t_data **data,
 void				init_the_player(t_mlx *mlx);
 void				start_the_game(t_data *dt, t_scene *scene);
 
-// input_file
-void				free_details(t_scene *det);
-t_scene				*read_cub_file(char *file);
-
-// load_texture
+// init_texture
 unsigned int		convert_rgb(int r, int g, int b);
 t_img				*new_texture(t_mlx *mlx, char *tex_file);
-int					load_wall_texture(t_mlx *mlx, t_scene *scene);
-int					load_single_texture(t_mlx *mlx, t_img **texture, char *file,
+int					init_single_texture(t_mlx *mlx, t_img **texture, char *file,
 						char *direction);
+int					init_wall_texture(t_mlx *mlx, t_scene *scene);
 void				init_textures(t_mlx *mlx, t_scene *scene);
-
-// loading_utils
-char				*ft_strjoin_free(char *s1, char *s2);
-int					is_empty_line(char *line);
-int					is_tex_info(char *line);
-void				free_scene(t_scene *scene);
-void				load_error(char *msg, char *line, char **arr,
-						t_scene *scene);
-
-// map_elem_checks
-int					valid_map_elem(char *map);
-int					valid_num_player_pos(char *map);
-void				get_map_dimensions(char **map, t_data *data);
-void				get_player_position(char **map, t_data *data);
-char				**convert_map(char **prev, t_data *data);
-t_data				*process_map(t_scene *scene);
 
 // mouse
 int					mouse_move(int x, int y, t_mlx *mlx);
@@ -278,13 +253,38 @@ void				reset_player(t_mlx *mlx);
 void				rotate_player(t_mlx *mlx, float angle);
 void				move_player(t_mlx *mlx, double move_x, double move_y);
 
-// test_utils
-void				print_details(t_scene *details);
+//**loading folder
+//input_file
+int					valid_map_elem(char *map);
+int					valid_num_player_pos(char *map);
+int					read_map(int fd, char *line, t_scene *scene);
+int					read_details(int fd, t_scene *scene);
+t_scene				*read_cub_file(char *file);
 
-// validations
-int					validate_map(t_data *data);
-int					check_player_position(t_data *data, int y, int x,
-						int *player_count);
-int					validate_player_position(t_data *data);
+//scene_loading
+int					get_tex_file(char *line, t_scene *scene);
+int					get_color_val(char *line, t_scene *scene);
+int					get_tex_info(char *line, t_scene *scene);
+char				*read_texture(int fd, t_scene **scene);
+
+//loading_utils
+char				*ft_strjoin_free(char *s1, char *s2);
+int					is_empty_line(char *line);
+int					is_tex_info(char *line);
+void				free_scene(t_scene *scene);
+void				load_error(char *msg, char *line, char **arr,
+						t_scene *scene);
+
+//check_scene
+int					check_color_val(char **arr);
+int					check_tex_file(char *file);
+int					check_scene(t_scene *det);
+
+//process_map
+void				get_map_dimensions(char **map, t_data *data);
+void				get_player_position(char **map, t_data *data);
+char				**convert_map(char **prev, t_data *data);
+void				map_fill(int x, int y, t_data *data, int *valid);
+t_data				*process_map(t_scene *scene);
 
 #endif

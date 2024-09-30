@@ -1,58 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_elem_checks.c                                  :+:      :+:    :+:   */
+/*   process_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolai <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 21:04:26 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/28 23:07:59 by jolai            ###   ########.fr       */
+/*   Updated: 2024/09/30 18:03:07 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int	valid_map_elem(char *map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		if (map[i] != '0' && map[i] != '1'
-			&& map[i] != ' ' && map[i] != '\n'
-			&& map[i] != 'N' && map[i] != 'S'
-			&& map[i] != 'E' && map[i] != 'W')
-		{
-			ft_putstr_fd("Error\nInvalid map character: ", STDERR_FILENO);
-			ft_putchar_fd(map[i], STDERR_FILENO);
-			ft_putstr_fd("\n", STDERR_FILENO);
-			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	valid_num_player_pos(char *map)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (map[i])
-	{
-		if (map[i] == 'N' || map[i] == 'S' || map[i] == 'E' || map[i] == 'W')
-			count++;
-		i++;
-	}
-	if (count == 1)
-		return (1);
-//	ft_putstr_fd("Error\nInvalid number of player starting position\n", STDERR_FILENO);
-	load_error("Invalid number of player starting position", NULL, NULL, NULL);	
-	return (0);
-}
 
 void	get_map_dimensions(char **map, t_data *data)
 {
@@ -139,20 +97,6 @@ char	**convert_map(char **prev, t_data *data)
 	return (new);
 }
 
-void	print_data(t_data *dt)
-{
-	int	i;
-
-	i = 0;
-	printf("Map size(x,y): %d, %d\n", dt->map_width, dt->map_height);
-	while (dt->map2d[i])
-	{
-		printf("%s\n", dt->map2d[i]);
-		i++;
-	}
-	printf("Player start(x,y): %d, %d\n", dt->player_x_position, dt->player_y_position);
-}
-
 void	map_fill(int x, int y, t_data *data, int *valid)
 {
 	char	c;
@@ -202,6 +146,5 @@ t_data	*process_map(t_scene *scene)
 		load_error("Invalid map borders", NULL, NULL, NULL);
 		return (NULL);
 	}
-	print_data(data);
 	return (data);
 }

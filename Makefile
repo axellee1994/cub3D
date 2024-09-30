@@ -44,13 +44,12 @@ SRC_FILES := main.c \
 			hooks.c \
 			initialization.c \
 			player.c \
-			validation.c \
-			input_file.c \
-			check_scene.c \
-			map_elem_checks.c \
-			load_texture.c \
-			loading_utils.c \
-			test_utils.c
+			loading/input_file.c \
+			loading/scene_loading.c \
+			loading/loading_utils.c \
+			loading/check_scene.c \
+			loading/process_map.c \
+			init_texture.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

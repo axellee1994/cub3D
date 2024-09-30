@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:45:17 by jolai             #+#    #+#             */
-/*   Updated: 2024/09/30 12:37:29 by axlee            ###   ########.fr       */
+/*   Updated: 2024/09/30 17:38:57 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,7 @@ t_img	*new_texture(t_mlx *mlx, char *tex_file)
 	return (new);
 }
 
-int	load_wall_texture(t_mlx *mlx, t_scene *scene)
-{
-	if (!load_single_texture(mlx, &mlx->dt->north, scene->north,
-			"North Texture") || !load_single_texture(mlx, &mlx->dt->south,
-			scene->south, "South Texture") || !load_single_texture(mlx,
-			&mlx->dt->east, scene->east, "East Texture")
-		|| !load_single_texture(mlx, &mlx->dt->west, scene->west,
-			"West Texture"))
-	{
-		return (0);
-	}
-	return (1);
-}
-
-int	load_single_texture(t_mlx *mlx, t_img **texture, char *file,
+int	init_single_texture(t_mlx *mlx, t_img **texture, char *file,
 		char *direction)
 {
 	char	*msg;
@@ -80,6 +66,20 @@ int	load_single_texture(t_mlx *mlx, t_img **texture, char *file,
 	return (result);
 }
 
+int	init_wall_texture(t_mlx *mlx, t_scene *scene)
+{
+	if (!init_single_texture(mlx, &mlx->dt->north, scene->north,
+			"North Texture") || !init_single_texture(mlx, &mlx->dt->south,
+			scene->south, "South Texture") || !init_single_texture(mlx,
+			&mlx->dt->east, scene->east, "East Texture")
+		|| !init_single_texture(mlx, &mlx->dt->west, scene->west,
+			"West Texture"))
+	{
+		return (0);
+	}
+	return (1);
+}
+
 void	init_textures(t_mlx *mlx, t_scene *scene)
 {
 	mlx->dt->floor = convert_rgb(ft_atoi(scene->floor[0]),
@@ -93,7 +93,7 @@ void	init_textures(t_mlx *mlx, t_scene *scene)
 		free_scene(scene);
 		free_and_exit(mlx);
 	}
-	if (!load_wall_texture(mlx, scene))
+	if (!init_wall_texture(mlx, scene))
 	{
 		free_scene(scene);
 		free_and_exit(mlx);
