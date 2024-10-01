@@ -85,12 +85,6 @@ MANDATORY_OBJ := $(addprefix $(OBJ_DIR)/, $(MANDATORY_OBJ_FILES))
 BONUS_OBJ := $(addprefix $(OBJ_DIR)/, $(BONUS_OBJ_FILES))
 
 # Compilation rules
-$(NAME): $(LIBFT) $(MANDATORY_OBJ) $(INCLUDES)
-	$(CC) $(CFLAGS) -o $(NAME) $(MANDATORY_OBJ) $(IFLAGS) $(LFLAGS) $(MLX)
-
-$(BONUS_NAME): $(LIBFT) $(BONUS_OBJ) $(INCLUDES)
-	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(IFLAGS) $(LFLAGS) $(MLX)
-
 all: $(NAME)
 	@echo "\033[0;32m"
 	@echo '>>============================================================<<'
@@ -105,6 +99,9 @@ all: $(NAME)
 	@echo '||                                                            ||'
 	@echo '>>============================================================<<'
 	@echo "\033[0m"
+	
+$(NAME): $(LIBFT) $(MANDATORY_OBJ) $(INCLUDES)
+	$(CC) $(CFLAGS) -o $(NAME) $(MANDATORY_OBJ) $(IFLAGS) $(LFLAGS) $(MLX)
 
 bonus: $(BONUS_NAME)
 	@echo "\033[0;32m"
@@ -122,6 +119,9 @@ bonus: $(BONUS_NAME)
 	@echo '||                                                            ||'
 	@echo '>>============================================================<<'
 	@echo "\033[0m"
+	
+$(BONUS_NAME): $(LIBFT) $(BONUS_OBJ) $(INCLUDES)
+	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(IFLAGS) $(LFLAGS) $(MLX)
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR) --no-print-directory
@@ -133,8 +133,6 @@ $(OBJ_DIR)/%.o: $(MANDATORY_DIR)/%.c $(INCLUDES)
 $(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c $(INCLUDES)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS)
-
-.PHONY: all bonus
 
 # Cleanup rules
 clean:
@@ -153,7 +151,6 @@ re_bonus: fclean bonus
 norm:
 	@$(NORM) $(SRC_DIR)/*.c $(INCLUDES_DIR)/*.h
 
-.PHONY: norm
 
 # Custom commands
 leaks: $(NAME)
@@ -162,4 +159,4 @@ leaks: $(NAME)
 	--track-origins=yes \
 	./cub3D
 
-.PHONY: all bonus clean fclean re re_bonus
+.PHONY: all bonus clean fclean re re_bonus norm
