@@ -24,10 +24,11 @@ $v_flags ./cub3D_bonus scenes/basic.ber
 echo ""
 echo ""
 
-//echo -e "\033[0;31mTesting no file permissions\033[0m"
-//$v_flags ./cub3D_bonus scenes/no_perm.cub
-//echo ""
-//echo ""
+echo -e "\033[0;31mTesting no file permissions\033[0m"
+chmod 000 scenes/no_perm.cub
+$v_flags ./cub3D_bonus scenes/no_perm.cub
+echo ""
+echo ""
 
 echo -e "\033[0;31mTesting no texture\033[0m"
 $v_flags ./cub3D_bonus scenes/no_north.cub
@@ -120,13 +121,6 @@ $v_flags ./cub3D_bonus scenes/multi_player_different_direction.cub
 echo ""
 echo ""
 $v_flags ./cub3D_bonus scenes/multi_player_same_direction.cub
-echo ""
-echo ""
-
-echo -e "\033[0;31mTesting read-only .cub file\033[0m"
-chmod 444 scenes/read_only.cub
-//$v_flags ./cub3D_bonus scenes/read_only.cub
-chmod 644 scenes/read_only.cub
 echo ""
 echo ""
 
