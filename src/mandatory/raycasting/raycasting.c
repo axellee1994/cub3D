@@ -6,7 +6,7 @@
 /*   By: axlee <axlee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:05:24 by axlee             #+#    #+#             */
-/*   Updated: 2024/09/30 16:55:54 by axlee            ###   ########.fr       */
+/*   Updated: 2024/10/01 12:08:47 by jolai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	wall_hit(double x, double y, t_mlx *mlx)
 	if (x_m < 0 || y_m < 0 || y_m >= mlx->dt->map_height
 		|| x_m >= mlx->dt->map_width || !mlx->dt->map2d[y_m])
 		return (0);
-	if (mlx->dt->map2d[y_m] && x_m <= (int)strlen(mlx->dt->map2d[y_m]))
+	if (mlx->dt->map2d[y_m] && x_m <= (int)ft_strlen(mlx->dt->map2d[y_m]))
 		if (mlx->dt->map2d[y_m][x_m] == '1')
 			return (0);
 	return (1);
