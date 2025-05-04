@@ -65,9 +65,8 @@ This project is licensed under the BSD 2-Clause License. See the `mlx/LICENSE` f
 ## Contact Information
 
 For questions or support, please contact:
-- Axel Lee (<axlee@42mail.sutd.edu.sg>)
-- [GitHub Issues](https://github.com/axellee1994/cub3D/issues)
-
+*   **Author(s):** axellee1994 - [https://github.com/axellee1994](https://github.com/axellee1994)
+*   **Project Link:** [https://github.com/axellee1994/cub3D](https://github.com/axellee1994/cub3D)
 ---
 
 Thank you for your interest in Cub3D! Contributions, feedback, and suggestions are always welcome.
