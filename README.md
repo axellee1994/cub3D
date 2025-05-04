@@ -1,73 +1,73 @@
 # Cub3D
 
-## Overview
-Cub3D is a 3D graphics project inspired by the classic game Wolfenstein 3D. It uses raycasting techniques to create a 3D perspective in a 2D map.
+## Description
+Cub3D is a graphical 3D game project built as part of the 42 Cursus. It implements a simple raycasting engine similar to early first-person shooters (e.g., Wolfenstein 3D). The project demonstrates foundational graphics programming, player movement, collision detection, and rendering techniques using the MinilibX library.
 
-## Features
-- 3D perspective rendering using raycasting
-- Textured walls with different colors for each direction (North, South, East, West)
-- Player movement (forward, backward, strafe left, right)
-- Player rotation (look left, right)
-- Minimap display
-- Floor and ceiling rendering
+### Main Features
+- Real-time 3D rendering with raycasting
+- Player movement and rotation
+- Wall, floor, and ceiling textures
+- Map parsing and validation
 - Basic collision detection
+- Simple UI elements
 
-## Requirements
-- gcc compiler
+## Installation Instructions
+
+### Prerequisites
+- GCC (GNU Compiler Collection)
 - Make
-- MinilibX library
+- X11 libraries (Linux) or XQuartz (macOS)
+- MinilibX (included as a submodule)
 
-## Compilation
-To compile the project, run:
+### Steps
+```bash
+git clone https://github.com/axellee1994/42Cursus.git
+cd 42Cursus/cub3d
 make
+```
 
-To check for leaks, run:
-make leaks
+If you are on Linux, ensure the following dependencies are installed:
+```bash
+sudo apt-get install gcc make xorg libxext-dev libbsd-dev
+```
+For macOS, install XQuartz:
+```bash
+brew install --cask xquartz
+reboot
+```
 
-## Usage
-To run the project, run:
-./cub3D [map_file]
+## Usage Instructions
 
+Run the Cub3D executable with a valid map file:
+```bash
+./cub3d maps/example.cub
+```
 
-### Controls
-- W: Move forward
-- S: Move backward
-- A: Strafe left
-- D: Strafe right
-- Left Arrow: Rotate camera left
-- Right Arrow: Rotate camera right
-- ESC: Exit the game
+- Use `W`, `A`, `S`, `D` to move.
+- Use left/right arrows to rotate the player.
+- Press `ESC` to exit the game.
 
-## Map Format
-The map file should be a `.cub` file with the following format:
-(STILL WORKING ON THIS)
+## Contribution Guidelines
 
-## Optimization
-- [ ] minimap/fov_lines.c
-- [x] minimap/map_utils.c
-- [ ] minimap/minimap.c
-- [x] raycasting/angle_utils.c
-- [x] raycasting/intersection_utils.c
-- [ ] raycasting/intersection.c
-- [x] raycasting/raycasting.c
-- [x] rendering/drawing_utils.c
-- [x] rendering/pixel_utils.c
-- [x] rendering/rendering.c
-- [x] free_and_exit.c
-- [x] help.c
-- [x] hooks.c
-- [x] initialization.c
-- [x] main.c
-- [x] player.c
-- [x] validation.c 
+We welcome contributions! To contribute:
+- Fork this repository.
+- Create a new branch for your feature or bugfix.
+- Follow the code style used in the project (norminette for C code).
+- Write clear commit messages.
+- Submit a pull request with a description of your changes.
 
-## Known Issues
-- [ ] Texture files still need to be implemented
-- [ ] Minimap still needs to be shortened and optimised (Consider taking out the FOV lines)
-- [ ] Need to create a .cub file to test the program
+Please ensure your code passes all existing tests and does not break the build.
 
-## Future Improvements
-- [List any planned features or improvements]
+## License Information
 
-## Contributors
-- [axlee]
+This project is licensed under the BSD 2-Clause License. See the `mlx/LICENSE` file for full details.
+
+## Contact Information
+
+For questions or support, please contact:
+- Axelle Lee (<your.email@domain.com>)
+- [GitHub Issues](https://github.com/axellee1994/42Cursus/issues)
+
+---
+
+Thank you for your interest in Cub3D! Contributions, feedback, and suggestions are always welcome.
