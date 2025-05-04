@@ -65,8 +65,8 @@ This project is licensed under the BSD 2-Clause License. See the `mlx/LICENSE` f
 ## Contact Information
 
 For questions or support, please contact:
-- Axelle Lee (<your.email@domain.com>)
-- [GitHub Issues](https://github.com/axellee1994/42Cursus/issues)
+- Axel Lee (<axlee@42mail.sutd.edu.sg>)
+- [GitHub Issues](https://github.com/axellee1994/cub3D/issues)
 
 ---
 
